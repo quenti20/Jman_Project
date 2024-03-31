@@ -1,0 +1,72 @@
+
+  
+  .card {
+    padding: 40px;
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  border-radius: 10px;
+  background-color: #ceb4b4;
+  text-align: center;
+  margin: auto; /* Center the card horizontally */
+  margin-top: 100px; /* Adjust the top margin as needed */
+    
+  }
+  
+  .card h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #333333;
+  }
+  
+  .change-pass {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .change-pass input {
+    margin-bottom: 20px;
+    padding: 12px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    width: 100%;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  .change-pass input:focus {
+    border-color: #007bff;
+  }
+  
+  .change-pass button {
+    color: #ffffff;
+    background-color: #9a9da0;
+    padding: 12px 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .change-pass button:hover {
+    background-color: #040b13;
+  }
+  
+  .link {
+    margin-top: 20px;
+  }
+  
+  .link a {
+    color: #16181a;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .link a:hover {
+    color: #0056b3;
+  }
+  

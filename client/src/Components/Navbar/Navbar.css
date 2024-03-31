@@ -1,0 +1,22 @@
+.navbar {
+    background-color: #333;
+
+    
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  .nav-link {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .nav-link:not(:last-child) {
+    margin-right: 20px;
+  }
+  

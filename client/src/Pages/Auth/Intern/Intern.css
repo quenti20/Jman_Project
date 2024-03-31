@@ -1,0 +1,93 @@
+.intern-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .gantt-chart {
+    border: 1px solid #ccc;
+    border-radius:5px;
+    overflow: hidden;
+  }
+
+.module-header {
+display: flex;
+background-color: #f0f0f0;
+padding: 10px;
+font-weight: bold;
+}
+
+.module-title {
+flex: 1;
+}
+
+.module-row {
+border-bottom: 1px solid #ccc;
+}
+
+.module-info {
+display: flex;
+align-items: center;
+padding: 10px;
+}
+
+.module-info > div {
+flex: 1;
+}
+
+.trainings {
+padding: 10px;
+}
+
+.training {
+border: 1px solid #ccc;
+display: flex;
+flex-direction: row;
+margin: auto;
+border-radius: 5px;
+margin-bottom: 10px;
+padding: 10px;
+}
+
+.training p {
+margin: 5px 0;
+}
+
+.training p strong {
+margin-right: 5px;
+padding: 10px;
+}
+
+.assessments {
+padding: 10px;
+}
+
+.assessment {
+border: 1px solid #ccc;
+display: flex;
+flex-direction: row;
+margin: auto;
+border-radius: 5px;
+margin-bottom: 10px;
+padding: 10px;
+}
+
+.assessment p {
+margin: 5px 0;
+}
+
+.assessment p strong {
+margin-right: 5px;
+padding: 10px;
+}
+
+button {
+background-color: #007bff;
+color: #fff;
+border: none;
+padding: 5px 10px;
+cursor: pointer;
+}
+
+button:hover {
+background-color: #0056b3;
+}
