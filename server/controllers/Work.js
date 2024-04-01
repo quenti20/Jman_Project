@@ -14,7 +14,7 @@ exports.createWork = async (req, res) => {
                 workType,
                 _id: new mongoose.Types.ObjectId(),
                 module_id,
-                trainer_name,
+                trainer_name, 
                 date,
                 start_time,
                 end_time

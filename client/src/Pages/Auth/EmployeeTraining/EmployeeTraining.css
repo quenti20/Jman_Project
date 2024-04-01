@@ -1,61 +1,144 @@
-/* EmployeeTraining.css */
+/* Dark mode styling */
+body {
+  background-image: url('../../../pics/ModulePic.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; 
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  color: #ffffff;
+}
 
 .module-list {
-    list-style-type: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+}
+
+.module {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  background-image: url('../../../pics/ModulePic.jpg')!important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.module:hover {
+  background: linear-gradient(135deg, #36393f 0%, #43464d 100%);
+  animation: backgroundAnimation 0.5s ease;
+}
+
+@keyframes backgroundAnimation {
+  0% {
+    transform: scale(1);
   }
-  
-  .module {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
+  50% {
+    transform: scale(1.05);
   }
-  
-  .module-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Align items vertically */
-    cursor: pointer;
+  100% {
+    transform: scale(1);
   }
-  
-  .module-details {
-    margin-top: 10px;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
-    display: none; /* Hide by default */
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.module-header h3 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.module-header button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.module-header button:hover {
+  background-color: #45a049;
+}
+
+.module-header button:focus {
+  outline: none;
+}
+
+.module-details {
+  margin-top: 10px;
+}
+
+.module-details p {
+  margin: 5px 0;
+  color: #d3c8c8;
+}
+
+/* WorkSessionCard */
+.WorkSessionCard {
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #dadde5;
+  transition: background-color 0.3s ease;
+}
+
+.WorkSessionCard:hover {
+  background-color: #e6e9ee;
+}
+
+.WorkSessionCard h3 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.WorkSessionCard p {
+  margin: 5px 0;
+  color: #d3c8c8;
+}
+
+.work-session-date {
+  color: #ffffff; /* Set the color to white */
+}
+
+
+.WorkSessionCard.Assessment {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.WorkSessionCard.Training {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+/* Update Work Sessions Date color */
+.WorkSessionCard h4 {
+  margin: 0;
+  color: #ffffff; /* Update the color to white */
+}
+
+/* Add animation to WorkSessionCard */
+.WorkSessionCard {
+  animation: cardAnimation 0.2s ease;
+}
+
+@keyframes cardAnimation {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
   }
-  
-  .module-details.show {
-    display: block; /* Show when toggled */
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .module-header button {
-    background-color: #0f1127;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .module-header button:hover {
-    background-color: #0056b3;
-  }
-  
-  .work-session-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  .work-session-card h3 {
-    margin-bottom: 5px;
-  }
-  
-  .work-session-card p {
-    margin: 5px 0;
-  }
-  
-  /* Add any additional styling as needed */
-  
+}
