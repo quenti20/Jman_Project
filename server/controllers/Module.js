@@ -1,21 +1,19 @@
-const Module = require('../models/ModuleSchema');
+const Module = require('../models/ModuleSchema.js');
 const mongoose = require('mongoose');
 
-
-exports.createEmployeeModule = async (req, res) => {
+exports.createModule = async (req, res) => {
     try {
         // Extract data from the request body
-        const {TrainingName, Module_coe_Name, Date,UserType, trainingSessions, assessments } = req.body;
+        const { TrainingName, Coe_Name, UserType, Date, WorkSessions } = req.body;
 
         // Create a new module
         const newModule = new Module({
             _id: new mongoose.Types.ObjectId(), // Generate a new ObjectId
             TrainingName,
-            Module_coe_Name,
+            Coe_Name,
             UserType,
             Date,
-            trainingSessions,
-            assessments
+            WorkSessions
         });
 
         // Save the module to the database
@@ -30,41 +28,41 @@ exports.createEmployeeModule = async (req, res) => {
     } 
 };
 
-exports.getEmployeeModules = async (req, res) => {
+exports.getModules = async (req, res) => {
     try {
-        // Retrieve all employee modules from the database
-        const employeeModules = await Module.find();
+        // Retrieve all modules from the database
+        const modules = await Module.find();
 
-        // If no employee modules are found, return a 404 error
-        if (!employeeModules || employeeModules.length === 0) {
-            return res.status(404).json({ error: 'No employee modules found' });
+        // If no modules are found, return a 404 error
+        if (!modules || modules.length === 0) {
+            return res.status(404).json({ error: 'No modules found' });
         }
 
-        // Send the employee modules as a success response
-        res.status(200).json({ employeeModules });
+        // Send the modules as a success response
+        res.status(200).json({ modules });
     } catch (error) {
         // If an error occurs, send an error response
-        console.error('Error retrieving employee modules:', error);
+        console.error('Error retrieving modules:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
 
-
-exports.updateEmployeeModule = async (req, res) => {
+exports.updateModule = async (req, res) => {
     try {
         // Extract data from the request body
-        const { moduleId, TrainingName, Module_coe_Name, Date, UserType, trainingSessions, assessments } = req.body;
+        const { moduleId, TrainingName, Coe_Name, UserType, Date, WorkSessions } = req.body;
 
-        // Find the module by ID and update it
-        const updatedModule = await Module.findByIdAndUpdate(
-            moduleId,
+        // Update the module
+        const updatedModule = await Module.findOneAndUpdate(
+            { _id: moduleId },
             {
-                TrainingName,
-                Module_coe_Name,
-                Date,
-                UserType,
-                trainingSessions,
-                assessments
+                $set: {
+                    TrainingName,
+                    Coe_Name,
+                    UserType,
+                    Date,
+                    WorkSessions
+                }
             },
             { new: true }
         );
@@ -83,13 +81,12 @@ exports.updateEmployeeModule = async (req, res) => {
     }
 };
 
-
-exports.deleteEmployeeModule = async (req, res) => {
+exports.deleteModule = async (req, res) => {
     try {
         // Extract the module ID from the request parameters
-        const  moduleId  = await req.params.id;
+        const moduleId = req.params.id;
 
-        // Find the module by ID and delete it
+        // Find and delete the module by ID
         const deletedModule = await Module.findByIdAndDelete(moduleId);
 
         // If the module was not found, return a 404 error

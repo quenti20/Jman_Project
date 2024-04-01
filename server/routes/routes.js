@@ -1,34 +1,33 @@
 const express = require("express");
 const router = express.Router();
 const userController = require('../controllers/User');
-const trainingController = require('../controllers/Training')
+const trainingController = require('../controllers/Work')
 const moduleController = require('../controllers/Module')
 const PerformanceController = require('../controllers/Performance')
 const AssessmentController = require('../controllers/Assessment')
-
-
+const CombinedController = require('../controllers/Work')
+const TrainerController = require('../controllers/Trainer')
 router.post('/newUser', userController.createNewUser)
 router.post('/login', userController.userLogin)
 router.put('/changePassword/:id', userController.changePassword) 
 
 
-router.post('/createTraining', trainingController.createTraining);
-router.post('/createAssessment', AssessmentController.createAssessment);
-router.post('/createEmployeeModule', moduleController.createEmployeeModule);
+router.post('/createWork', CombinedController.createWork);
+router.post('/createModule', moduleController.createModule);
+router.post('/createTrainer', TrainerController.createTrainer);
 
-router.get('/getAllAssessments', AssessmentController.getAssessments);
-router.get('/getAllTrainings', trainingController.getTrainings);
-router.get('/getAllModules', moduleController.getEmployeeModules);
-
+router.get('/getAllWorks', CombinedController.getWorks);
+router.get('/getAllModules', moduleController.getModules);
 
 
-router.put('/updateTraining', trainingController.updateTraining);
-router.put('/updateAssessment', AssessmentController.updateAssessment);
-router.put('/updateEmployeeModule', moduleController.updateEmployeeModule);
 
-router.delete('/deleteTraining/:id', trainingController.deleteTraining);
-router.delete('/deleteAssessment/:id', AssessmentController.deleteAssessment);
-router.delete('/deleteEmployeeModule/:id', moduleController.deleteEmployeeModule);
+//router.put('/updateTraining', trainingController.updateTraining);
+router.put('/updateWork', CombinedController.updateWork);
+router.put('/updateModule', moduleController.updateModule);
+
+//router.delete('/deleteTraining/:id', trainingController.deleteTraining);
+router.delete('/deleteWork/:id', CombinedController.deleteWork);
+router.delete('/deleteModule/:id', moduleController.deleteModule);
 
 
 module.exports = router;

@@ -9,16 +9,20 @@ const ModuleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Coe_Name: {type:String},
-    UserType: {required:true,type:String},
+    Coe_Name: {
+        type: String
+    },
+    UserType: {
+        type: String,
+        enum: ['Employee', 'Intern'], // Specify the allowed values for UserType
+        required: true
+    },
     Date: {
         type: Date,
         required: true
     },
     // Array of training session IDs (one-to-many relationship)
-    trainingSessions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'TrainingSession' }],
-    // Array of assessment IDs (one-to-many relationship)
-    assessments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assessment' }],
+    WorkSessions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CombinedModel' }], // Reference to CombinedModel
     // You can include other fields as needed
 });
 

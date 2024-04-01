@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// import './ChangePassword.css'
+ import './ChangePassword.css'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
@@ -61,4 +61,4 @@ const ChangePassword = () => {
     )
 }
 
-export default ChangePassword
+export default ChangePassword;

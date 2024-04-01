@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import './EmployeePlan.css';
+//import './EmployeePlan.css';
 
 import modulesData from '../../../data/module';
 import assessmentsData from '../../../data/Assessment';
 import trainingsData from '../../../data/training';
 import axios from 'axios';
 
-import CreateTrainingForm from '../CreateTrainingForm/CreateTrainingForm';
-import CreateAssessmentForm from '../CreateAssessmentForm/CreateAssessmentForm';
-import CreateModuleForm from '../CreateModuleForm/CreateModuleForm';
+import CreateTrainingForm from '../../../Components/CreateTrainingForm/CreateTrainingForm';
+import CreateAssessmentForm from '../../../Components/CreateAssessmentForm/CreateAssessmentForm';
+import CreateModuleForm from '../../../Components/CreateModuleForm/CreateModuleForm';
 
-import UpdateTrainingForm from '../UpdateTrainingForm/UpdateTrainingForm';
-import UpdateAssessmentForm from '../UpdateAssessmentForm/UpdateAssessment';
-import UpdateModuleForm from '../UpdateModuleForm/UpdateModuleForm';
+import UpdateTrainingForm from '../../../Components/UpdateTrainingForm/UpdateTrainingForm';
+import UpdateAssessmentForm from '../../../Components/UpdateAssessmentForm/UpdateAssessment';
+import UpdateModuleForm from '../../../Components/UpdateModuleForm/UpdateModuleForm';
 
 
 const EmployeePlan = () => {

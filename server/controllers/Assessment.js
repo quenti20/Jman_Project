@@ -73,7 +73,7 @@ exports.updateAssessment = async (req, res) => {
                     description,
                     date,
                     start_time,
-                    end_time
+                    end_time  
                 }
             },
             { new: true } // Return the updated document

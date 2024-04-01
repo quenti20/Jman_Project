@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import './NewUser.css';
 import { Link, useNavigate } from 'react-router-dom';
+import AddTrainerButton from '../../../Components/AddTrainerButton/AddTrainerbutton'; // Import AddTrainerButton component
 
 const NewUser = () => {
   const [email, setEmail] = useState('');
@@ -67,6 +68,10 @@ const NewUser = () => {
           <Link to="/internPlan">
             <button>Intern Plan</button>
           </Link>
+          <Link to="/admindashboard">
+            <button>Admin Dashboard</button>
+          </Link>
+          <AddTrainerButton /> {/* Include the AddTrainerButton component here */}
         </div>
       </div>
     </div>

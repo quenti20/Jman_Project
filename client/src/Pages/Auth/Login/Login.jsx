@@ -17,7 +17,7 @@ const Login = () => {
             if(res.status == 200){
                 localStorage.setItem('id', res.data.user._id)
                 if(res.data.user.userType == 'Admin'){
-                    navigate('/newUser')
+                    navigate('/admin')
                 }
                 else{
                     if(res.data.user.hasChanged == false){

@@ -1,0 +1,27 @@
+.work-session-card {
+    width: 300px; /* Adjust width as needed */
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .work-session-header {
+    margin-bottom: 10px;
+  }
+  
+  .work-session-header h3 {
+    margin: 0;
+    color: #fff;
+  }
+  
+  .work-session-body p {
+    margin: 5px 0;
+    color: #fff;
+  }
+  
+  .work-session-body p:first-child {
+    margin-top: 0;
+  }
+  
