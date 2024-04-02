@@ -3,179 +3,128 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 import { AutoComplete } from 'primereact/autocomplete';
-import { Dropdown } from 'primereact/dropdown'; 
-import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
+import { InputText } from 'primereact/inputtext'; 
 import axios from 'axios';
 import './AddTraining.css';
 
-const AddTraining = () => {
-    const [visible, setVisible] = useState(false);
-    const [trainingDate, setTrainingDate] = useState(null);
-    const [sessionName, setSessionName] = useState('');
-    const [sessionDomain, setSessionDomain] = useState('');
+const AddTraining = ({ module,visiblity,setShowAddTraining}) => {
+    const [visible, setVisible] = useState(visiblity);
+    const [workType, setWorkType] = useState(null);
     const [trainerName, setTrainerName] = useState('');
+    const [testName, setTestName] = useState('');
+    const [date, setDate] = useState(new Date());
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
-    const [description, setDescription] = useState('');
-    const [trainingType, setTrainingType] = useState(null);
-    const [filteredTrainers, setFilteredTrainers] = useState([]);
-    const [filteredDomains, setFilteredDomains] = useState([]);
-    const [allTrainers, setAllTrainers] = useState([]);
-    const [allDomains, setAllDomains] = useState([]);
-    const [duration, setDuration] = useState('');
+   //    const [date, setDate] = useState(new Date());
+
+    // const [filteredTestNames, setFilteredTestNames] = useState([]);
+    // const [filteredTrainers, setFilteredTrainers] = useState([]);
 
     useEffect(() => {
-        fetchAllTrainers();
-        fetchAllDomains();
+        // filterTestNames({ query: '' });
+        // filterTrainers({ query: '' });
     }, []);
 
-    useEffect(() => {
-        calculateDuration();
-    }, [startTime, endTime]);
+    // const filterTestNames = (event) => {
+    //     const query = event.query;
+    //     const filtered = module?.testNames.filter(testName =>
+    //         testName.toLowerCase().includes(query.toLowerCase())
+    //     ) || [];
+    //     setFilteredTestNames(filtered);
+    // };
 
-    const fetchAllTrainers = async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/api/sendtrainer');
-            setAllTrainers(response.data);
-        } catch (error) {
-            console.error('Error fetching trainers:', error);
-        }
-    };
-
-    const fetchAllDomains = async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/api/senddomain');
-            setAllDomains(response.data);
-        } catch (error) {
-            console.error('Error fetching domains:', error);
-        }
-    };
-
-    const filterTrainers = (event) => {
-        const query = event.query;
-        const filtered = allTrainers.filter(trainer => {
-            return trainer.name.toLowerCase().includes(query.toLowerCase());
-        });
-        setFilteredTrainers(filtered);
-    };
-
-    const filterDomains = (event) => {
-        const query = event.query;
-        const filtered = allDomains.filter(domain => {
-            return domain.name.toLowerCase().includes(query.toLowerCase());
-        });
-        setFilteredDomains(filtered);
-    };
-
+    // const filterTrainers = (event) => {
+    //     const query = event.query;
+    //     const filtered = module?.trainers.filter(trainer =>
+    //         trainer.name.toLowerCase().includes(query.toLowerCase())
+    //     ) || [];
+    //     setFilteredTrainers(filtered);
+    // };
+   
     const showDialog = () => {
         setVisible(true);
     };
 
     const hideDialog = () => {
+        setShowAddTraining(false)
         setVisible(false);
         // Reset all fields when dialog is closed
-        setTrainingDate(null);
-        setSessionName('');
-        setSessionDomain('');
+        setWorkType(null);
         setTrainerName('');
+        setTestName('');
+        setDate(null);
         setStartTime(null);
         setEndTime(null);
-        setDescription('');
-        setTrainingType(null);
     };
 
-    const handleSave = () => {
-        if (parseFloat(duration) <= 8) {
-            // Perform save operation with the entered data
-            console.log('Training Date:', trainingDate);
-            console.log('Session Name:', sessionName);
-            console.log('Session Domain:', sessionDomain);
-            console.log('Trainer Name:', trainerName);
-            console.log('Start Time:', startTime);
-            console.log('End Time:', endTime);
-            console.log('Description:', description);
-            console.log('Training Type:', trainingType);
-            console.log('Duration:', duration); 
+    const handleSave = async () => {
+        try {
+            // Convert start time to proper time format with AM/PM
+            const startTimeString = startTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            // Convert end time to proper time format with AM/PM
+            const endTimeString = endTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+    
+            const data = {
+                workType,
+                module_id: module._id,
+                trainer_name: trainerName,
+                testName: workType === 'Assessment' ? testName : '',
+                date,
+                start_time: startTimeString,
+                end_time: endTimeString
+            };
+            await axios.post('http://localhost:5000/createWork', data);
             hideDialog();
-        } else {
-            console.log('Duration is greater than 8 hours. Cannot save.');
+            // Optionally, you can handle success scenario here
+        } catch (error) {
+            console.error('Error saving work:', error);
+            // Optionally, you can handle error scenario here
         }
     };
-
-
-    const trainingTypeOptions = [
-        { label: 'Assessment', value: 'Assessment' },
-        { label: 'Training', value: 'Training' }
-    ];
-
-    const calculateDuration = () => {
-        if (startTime && endTime) {
-            const start = new Date(startTime);
-            const end = new Date(endTime);
-            const difference = Math.abs(end - start) / 36e5; // Difference in hours
-            setDuration(difference.toFixed(2) + ' hours');
-        } else {
-            setDuration('');
-        }
-    };
+    
 
     return (
         <div>
-            <Button label="Add Training" icon="pi pi-plus" onClick={showDialog} className="p-button-outlined" />
-            <Dialog header="Add Training" visible={visible} style={{ width: '50rem' }} onHide={hideDialog}>
+            {/* <Button label="Create Work" icon="pi pi-plus" onClick={showDialog} className="p-button-outlined" /> */}
+            <Dialog header="Create Work" visible={visible} style={{ width: '50rem' }} onHide={hideDialog}>
                 <div className="p-fluid">
                     <div className="p-field">
-                        <label htmlFor="trainingDate">Training Date</label>
-                        <Calendar id="trainingDate" value={trainingDate} onChange={(e) => setTrainingDate(e.value)} dateFormat="dd/mm/yy" />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="sessionName">Session Name</label>
-                        <InputText id="sessionName" value={sessionName} onChange={(e) => setSessionName(e.target.value)} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="sessionDomain">Session Domain</label>
-                        <AutoComplete
-                            id="sessionDomain"
-                            value={sessionDomain}
-                            suggestions={filteredDomains}
-                            completeMethod={filterDomains}
-                            field="name"
-                            onChange={(e) => setSessionDomain(e.value)}
-                            placeholder="Search Session Domain"
+                        <label htmlFor="workType">Work Type</label>
+                        <Dropdown
+                            id="workType"
+                            value={workType}
+                            options={[{ label: 'Assessment', value: 'Assessment' }, { label: 'Training', value: 'Training' }]}
+                            onChange={(e) => setWorkType(e.value)}
+                            placeholder="Select Work Type"
                         />
                     </div>
-                    <div className="p-field">
-                        <label htmlFor="trainerName">Trainer Name</label>
-                        <AutoComplete
-                            id="trainerName"
-                            value={trainerName}
-                            suggestions={filteredTrainers}
-                            completeMethod={filterTrainers}
-                            field="name"
-                            onChange={(e) => setTrainerName(e.value)}
-                            placeholder="Search Trainer"
-                        />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="description">Description</label>
-                        <InputText id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="trainingType">Training Type</label>
-                        <Dropdown id="trainingType" value={trainingType} options={trainingTypeOptions} onChange={(e) => setTrainingType(e.value)} placeholder="Select Training Type" />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="startTime">Start Time</label>
-                        <Calendar id="startTime" value={startTime} onChange={(e) => setStartTime(e.value)} timeOnly showTime />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="endTime">End Time</label>
-                        <Calendar id="endTime" value={endTime} onChange={(e) => setEndTime(e.value)} timeOnly showTime />
-                    </div>
-                    <div className={`p-field ${duration && parseFloat(duration) > 8 ? 'duration-red' : ''}`}>
-                        <label>Duration:</label>
-                        <span>{duration}</span>
-                    </div>
+                    {workType && (
+                        <>
+                            {workType === 'Assessment' && (
+                                <div className="p-field">
+                                    <label htmlFor="testName">Test Name</label>
+                                    <InputText id="testName" value={testName} onChange={(e) => setTestName(e.target.value)} />
+                                </div>
+                            )}
+                            <div className="p-field">
+                                <label htmlFor="trainerName">Trainer Name</label>
+                                <InputText id="trainerName" value={trainerName} onChange={(e) => setTrainerName(e.target.value)} />
+                            </div>
+                            <div className="p-field">
+                                <label htmlFor="date">Date</label>
+                                <Calendar id="date" value={date} onChange={(e) => setDate(e.value)} dateFormat="dd/mm/yy" />
+                            </div>
+                            <div className="p-field">
+                                <label htmlFor="startTime">Start Time</label>
+                                <Calendar id="startTime" value={startTime} onChange={(e) => setStartTime(e.value)} timeOnly showTime />
+                            </div>
+                            <div className="p-field">
+                                <label htmlFor="endTime">End Time</label>
+                                <Calendar id="endTime" value={endTime} onChange={(e) => setEndTime(e.value)} timeOnly showTime />
+                            </div>
+                        </>
+                    )}
                 </div>
                 <div className="p-dialog-footer">
                     <Button label="Cancel" icon="pi pi-times" onClick={hideDialog} className="p-button-text" />
@@ -184,7 +133,7 @@ const AddTraining = () => {
                         icon="pi pi-check"
                         onClick={handleSave}
                         autoFocus
-                        disabled={duration && parseFloat(duration) > 8}
+                        disabled={!workType || !trainerName || !date || !startTime || !endTime}
                     />
                 </div>
             </Dialog>
@@ -193,4 +142,3 @@ const AddTraining = () => {
 };
 
 export default AddTraining;
-

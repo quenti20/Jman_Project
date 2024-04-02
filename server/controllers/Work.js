@@ -72,7 +72,7 @@ exports.updateWork = async (req, res) => {
     try {
         // Extract data from the request body
         const { workId, workType, module_id, testName, trainer_name, date, start_time, end_time } = req.body;
-
+        console.log(req.body)
         // Update the document based on workType
         let updatedWork;
         if (workType === 'Training') {

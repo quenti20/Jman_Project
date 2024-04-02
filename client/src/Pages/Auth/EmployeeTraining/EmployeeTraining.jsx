@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import WorkSessionCard from '../../../Components/WorkSessionCard/WorkSessionCard';
+import UpdateWork from '../../../Components/UpdateWork/UpdateWork'; // Import the UpdateWork component
 import './EmployeeTraining.css'; // Import the CSS file
+import AddTraining from '../../../Components/AddTraining/AddTraining';
 
 // Function to format date as dd-mm-yyyy
 const formatDate = (dateString) => {
@@ -18,6 +20,11 @@ const EmployeeTraining = () => {
   const [works, setWorks] = useState([]);
   const [loadingWorks, setLoadingWorks] = useState(true);
   const [showDetails, setShowDetails] = useState({}); // State to track showing/hiding details
+  const [selectedModuleId, setSelectedModuleId] = useState(null); // State to store the selected module ID
+  const [showAddTraining, setShowAddTraining] = useState(false); // State to track whether to show AddTraining component
+  const [visibility, setVisibility] = useState(true);
+  const [showUpdateWork, setShowUpdateWork] = useState(false); // State to track whether to show UpdateWork component
+  const [selectedWork, setSelectedWork] = useState(null); // State to store the selected work session for update
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -49,7 +56,7 @@ const EmployeeTraining = () => {
         const response = await axios.get('http://localhost:5000/getAllWorks');
         setWorks(response.data.works.map(work => ({
           ...work,
-          date: formatDate(work.date.split('T')[0]) // Format work session date
+          date: formatDate(work.date) // Format work session date
         })));
         setLoadingWorks(false);
       } catch (error) {
@@ -68,22 +75,25 @@ const EmployeeTraining = () => {
     setShowDetails({ ...showDetails, [moduleId]: !showDetails[moduleId] });
   };
 
-  const parseTime = (timeString) => {
-    const [time, period] = timeString.split(' ');
-    const [hours, minutes] = time.split(':').map(Number);
-    let hours24 = hours;
-    if (period === 'PM' && hours < 12) {
-        hours24 += 12;
-    }
-    const date = new Date();
-    date.setHours(hours24, minutes, 0, 0);
-    return date;
+  const handleAddTrainingClick = (moduleId) => {
+    setSelectedModuleId(moduleId); // Set the selected module ID when the button is clicked
+    setShowAddTraining(true);
+  };
+
+  const handleUpdateWorkClick = (work) => {
+    setSelectedWork(work); // Set the selected work session to be updated
+    setShowUpdateWork(true); // Show the UpdateWork component
+  };
+
+  const handleUpdateWork = (updatedWork) => {
+    // Update the state of the works array with the updated work session
+    setWorks(works.map(work => (work._id === updatedWork._id ? updatedWork : work)));
   };
 
   // Function to calculate the time interval between start_time and end_time
   const calculateTimeInterval = (startTime, endTime) => {
-    const start = parseTime(startTime);
-    const end = parseTime(endTime);
+    const start = new Date(startTime);
+    const end = new Date(endTime);
     const interval = Math.abs(end - start) / 36e5; // Convert milliseconds to hours
     return interval;
   };
@@ -92,18 +102,17 @@ const EmployeeTraining = () => {
   const calculateTotalHours = (worksByDate) => {
     let totalHours = 0;
     worksByDate.forEach((work) => {
-        const { start_time, end_time } = work;
-        const interval = calculateTimeInterval(start_time, end_time);
-        totalHours += interval;
+      const interval = calculateTimeInterval(work.start_time, work.end_time);
+      totalHours += interval;
     });
-    return totalHours;
+    return totalHours.toFixed(2);
   };
 
   // Calculate total hours per WorkSession and hours left to be assigned from 8 hours
   const calculateHoursLeft = (worksByDate) => {
     const totalHours = calculateTotalHours(worksByDate);
     const hoursLeft = 8 - totalHours;
-    return hoursLeft;
+    return hoursLeft.toFixed(2);
   };
 
   return (
@@ -117,6 +126,10 @@ const EmployeeTraining = () => {
               <button onClick={() => toggleDetails(module._id)}>
                 {showDetails[module._id] ? 'Hide Details' : 'Show Details'}
               </button>
+              {/* Conditionally render the "Create Work" button below the Module Header */}
+              {showDetails[module._id] && (
+                <button onClick={() => handleAddTrainingClick(module._id)}>Create Work</button>
+              )}
             </div>
             {showDetails[module._id] && (
               <div className="module-details">
@@ -141,6 +154,7 @@ const EmployeeTraining = () => {
                       {worksByDate.map((work) => (
                         <li key={work._id}>
                           <WorkSessionCard className={`WorkSessionCard ${work.WorkType}`} work={work} />
+                          <button onClick={() => handleUpdateWorkClick(work)}>Update Work</button>
                         </li>
                       ))}
                     </ul>
@@ -151,6 +165,12 @@ const EmployeeTraining = () => {
           </li>
         ))}
       </ul>
+      {showAddTraining && (
+        <AddTraining module={modules.find(module => module._id === selectedModuleId)} visiblity={visibility} setShowAddTraining={setShowAddTraining} />
+      )}
+      {showUpdateWork && (
+        <UpdateWork workId={selectedWork._id} visible={showUpdateWork} onHide={() => setShowUpdateWork(false)} onUpdate={handleUpdateWork} />
+      )}
     </div>
   );
 };
