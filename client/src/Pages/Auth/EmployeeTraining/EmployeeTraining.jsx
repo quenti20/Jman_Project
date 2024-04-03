@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import WorkSessionCard from '../../../Components/WorkSessionCard/WorkSessionCard';
 import UpdateWork from '../../../Components/UpdateWork/UpdateWork';
-import AddModule from '../../../Components/AddModule/AddModule'; // Import the AddModule component
 import './EmployeeTraining.css';
+import AddTraining from '../../../Components/AddTraining/AddTraining';
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -22,7 +22,6 @@ const EmployeeTraining = () => {
   const [visibility, setVisibility] = useState(true);
   const [showUpdateWork, setShowUpdateWork] = useState(false);
   const [selectedWork, setSelectedWork] = useState(null);
-  const [showAddModule, setShowAddModule] = useState(false); // State variable for AddModule component visibility
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -31,8 +30,6 @@ const EmployeeTraining = () => {
         const filteredModules = response.data.modules.filter(module => module.UserType === 'Employee');
         setModules(filteredModules.map(module => ({
           ...module,
-          // Add an array to hold worksessions for each module
-          WorkSessions: []
         })));
         setLoadingModules(false);
         setShowDetails(filteredModules.reduce((acc, module) => {
@@ -51,14 +48,8 @@ const EmployeeTraining = () => {
     const fetchWorks = async () => {
       try {
         const response = await axios.get('http://localhost:5000/getAllWorks');
-        const allWorks = response.data.works.map(work => ({
+        setWorks(response.data.works.map(work => ({
           ...work,
-        }));
-        setWorks(allWorks);
-        // Update modules with worksessions belonging to each module
-        setModules(modules => modules.map(module => ({
-          ...module,
-          WorkSessions: allWorks.filter(work => module.WorkSessions.includes(work._id))
         })));
         setLoadingWorks(false);
       } catch (error) {
@@ -80,7 +71,6 @@ const EmployeeTraining = () => {
   const handleAddTrainingClick = (moduleId) => {
     setSelectedModuleId(moduleId);
     setShowAddTraining(true);
-    setShowAddModule(true); // Set state variable to show AddModule component
   };
 
   const handleUpdateWorkClick = (work) => {
@@ -90,6 +80,21 @@ const EmployeeTraining = () => {
 
   const handleUpdateWork = (updatedWork) => {
     setWorks(works.map(work => (work._id === updatedWork._id ? updatedWork : work)));
+  };
+
+  const handleDeleteWork = async (workId, moduleId) => {
+    try {
+      await axios.delete(`http://localhost:5000/deleteWork/${workId}`);
+      setWorks(works.filter(work => work._id !== workId));
+      setModules(modules.map(module => {
+        if (module._id === moduleId) {
+          module.WorkSessions = module.WorkSessions.filter(session => session !== workId);
+        }
+        return module;
+      }));
+    } catch (error) {
+      console.error('Error deleting work:', error);
+    }
   };
 
   const calculateTimeInterval = (startTime, endTime) => {
@@ -114,19 +119,9 @@ const EmployeeTraining = () => {
     return hoursLeft.toFixed(2);
   };
 
-  const handleDeleteWork = async (workId, moduleId) => {
-    try {
-      await axios.delete(`http://localhost:5000/deleteWork/${workId}`);
-      setWorks(works => works.filter(work => work._id !== workId));
-      setModules(modules => modules.map(module => {
-        if (module._id === moduleId) {
-          module.WorkSessions = module.WorkSessions.filter(session => session !== workId);
-        }
-        return module;
-      }));
-    } catch (error) {
-      console.error('Error deleting work:', error);
-    }
+  const getUniqueWorkSessionDates = () => {
+    const uniqueDates = [...new Set(works.map(work => work.date))];
+    return uniqueDates.sort((a, b) => new Date(a) - new Date(b));
   };
 
   return (
@@ -149,29 +144,28 @@ const EmployeeTraining = () => {
                 <p><strong>COE Name:</strong> {module.Coe_Name}</p>
                 <p><strong>User Type:</strong> {module.UserType}</p>
                 <p><strong>Date:</strong> {formatDate(module.Date)}</p>
-                {module.WorkSessions.length > 0 && (
-                  <div>
-                    {module.WorkSessions.filter(work => work.module_id === module._id).map((work) => (
-                      <div key={work._id}>
-                        <WorkSessionCard className={`WorkSessionCard ${work.WorkType}`} work={work} />
-                        <button onClick={() => handleUpdateWorkClick(work)}>Update Work</button>
-                        <button onClick={() => handleDeleteWork(work._id, module._id)}>Delete Work</button>
-                      </div>
-                    ))}
+                {getUniqueWorkSessionDates().map((date) => (
+                  <div key={date}>
+                    <h4 className="work-session-date">Work Sessions Date: {formatDate(date)}</h4>
+                    <ul>
+                      {works.filter(work => work.date === date).map((work) => (
+                        <li key={work._id}>
+                          <WorkSessionCard className={`WorkSessionCard ${work.WorkType}`} work={work} />
+                          <button onClick={() => handleUpdateWorkClick(work)}>Update Work</button>
+                          <button onClick={() => handleDeleteWork(work._id, module._id)}>Delete Work</button>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                )}
+                ))}
               </div>
             )}
           </li>
         ))}
       </ul>
-      {/* Button to show AddModule component */}
-      <button onClick={() => setShowAddModule(true)}>Add Module</button>
-      {/* AddModule component */}
-      {showAddModule && (
-        <AddModule visibility={showAddModule} setShowAddModule={setShowAddModule} />
+      {showAddTraining && (
+        <AddTraining module={modules.find(module => module._id === selectedModuleId)} visiblity={visibility} setShowAddTraining={setShowAddTraining} />
       )}
-      {/* UpdateWork component */}
       {showUpdateWork && (
         <UpdateWork work={selectedWork} visible={showUpdateWork} onHide={() => setShowUpdateWork(false)} onUpdate={handleUpdateWork} />
       )}
