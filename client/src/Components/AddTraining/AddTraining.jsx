@@ -60,10 +60,10 @@ const AddTraining = ({ module,visiblity,setShowAddTraining}) => {
 
     const handleSave = async () => {
         try {
-            // Convert start time to proper time format with AM/PM
-            const startTimeString = startTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-            // Convert end time to proper time format with AM/PM
-            const endTimeString = endTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            // // Convert start time to proper time format with AM/PM
+            // const startTimeString = startTime.toLocaleTimeString());
+            // // Convert end time to proper time format with AM/PM
+            // const endTimeString = endTime.toLocaleTimeString();
     
             const data = {
                 workType,
@@ -71,8 +71,8 @@ const AddTraining = ({ module,visiblity,setShowAddTraining}) => {
                 trainer_name: trainerName,
                 testName: workType === 'Assessment' ? testName : '',
                 date,
-                start_time: startTimeString,
-                end_time: endTimeString
+                start_time:startTime,
+                end_time: endTime
             };
             await axios.post('http://localhost:5000/createWork', data);
             hideDialog();

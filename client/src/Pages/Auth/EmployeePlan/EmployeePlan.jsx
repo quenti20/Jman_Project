@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import CreateTrainingForm from '../../../Components/CreateTrainingForm/CreateTrainingForm';
 import CreateAssessmentForm from '../../../Components/CreateAssessmentForm/CreateAssessmentForm';
-import CreateModuleForm from '../../../Components/CreateModuleForm/CreateModuleForm';
+import CreateModuleForm from '../../../Components/AddModule/AddModule';
 
 import UpdateTrainingForm from '../../../Components/UpdateTrainingForm/UpdateTrainingForm';
 import UpdateAssessmentForm from '../../../Components/UpdateAssessmentForm/UpdateAssessment';
