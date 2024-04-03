@@ -12,11 +12,11 @@
 }
 
 .work-session-card.Assessment {
-  background: linear-gradient(135deg, #251d2f 0%, #2575fc 100%);
+  background-color: rgb(34, 73, 36);
 }
 
 .work-session-card.Training {
-  background: linear-gradient(135deg, #b45924 0%, #5e1602 100%);
+  background-color: rgb(5, 114, 122);
 }
 
 .work-session-header {
@@ -37,7 +37,12 @@
 .description,
 .date,
 .start-time,
-.end-time {
+.end-time,
+.status {
   margin-top: 10px;
   color: #fff;
+}
+
+.completed {
+  background: linear-gradient(rgb(160, 154, 154),rgb(176, 174, 174)); /* Grey background for completed work sessions */
 }

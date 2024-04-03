@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import WorkSessionCard from '../../../Components/WorkSessionCard/WorkSessionCard';
-import './EmployeeVisual.css';
-
+import '../EmployeeVisual/EmployeeVisual.css' ;
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   const options = { day: 'numeric', month: 'long', year: 'numeric' };
   return date.toLocaleDateString('en-US', options);
 };
 
-const EmployeeVisual = () => {
+const EmployeeTraining = () => {
   const [modules, setModules] = useState([]);
   const [loadingModules, setLoadingModules] = useState(true);
   const [works, setWorks] = useState([]);
@@ -20,7 +19,7 @@ const EmployeeVisual = () => {
     const fetchModules = async () => {
       try {
         const response = await axios.get('http://localhost:5000/getAllModules');
-        const filteredModules = response.data.modules.filter(module => module.UserType === 'Employee');
+        const filteredModules = response.data.modules.filter(module => module.UserType === 'Intern');
         setModules(filteredModules.map(module => ({ ...module })));
         setLoadingModules(false);
         setShowDetails(filteredModules.reduce((acc, module) => {
@@ -78,7 +77,6 @@ const EmployeeVisual = () => {
   return (
     <div className='TotalPage'>
       <h2>Module List</h2>
-      <button className="AddPerformanceButton">Add Performance</button> {/* Add Performance button */}
       <ul className="TotalPage-list">
         {modules.map((module) => (
           <li key={module._id} className="TotalPage-module">
@@ -118,4 +116,4 @@ const EmployeeVisual = () => {
   );
 };
 
-export default EmployeeVisual;
+export default EmployeeTraining;

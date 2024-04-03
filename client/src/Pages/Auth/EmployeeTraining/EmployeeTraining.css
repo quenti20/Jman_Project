@@ -13,6 +13,24 @@ body {
   background: linear-gradient(black,grey);
 }
 
+.ButtonsFew {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ButtonsFew:hover {
+  background-color: #45a049;
+}
+
+
 .container {
   max-width: 1200px;
   margin: 0 auto;

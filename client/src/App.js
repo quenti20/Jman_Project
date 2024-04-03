@@ -8,7 +8,7 @@ import InternTraining from './Pages/Auth/InternTraining/InternTraining'; // Impo
 import AdminDashboard from './Pages/Auth/AdminDashboard/AdminDashboard';
 import EmployeeTraining from './Pages/Auth/EmployeeTraining/EmployeeTraining'
 import EmployeeVisual from './Pages/Auth/EmployeeVisual/EmployeeVisual'
-
+import InternVisual from './Pages/Auth/InternVisual/InternVisual'; // Import the
 function App() {
   return (
     <div>
@@ -21,7 +21,9 @@ function App() {
           <Route path='/internPlan' element= {<><Navbar /> <InternTraining /> </>     } /> 
           <Route path='/adminDashboard' element= {<><Navbar /> <AdminDashboard /> </>     } />
           <Route path='/employeePlan' element= {<><Navbar /> <EmployeeTraining /> </>} />           
-          <Route path='/employeeVisual' element= {<><Navbar /> <EmployeeVisual /> </>} />           
+          <Route path='/employeeVisual' element= {<><Navbar /> <EmployeeVisual /> </>} /> 
+          <Route path='/internVisual' element= {<><Navbar /> <InternVisual /> </>} /> 
+
         </Routes>
       </BrowserRouter>
     </div>

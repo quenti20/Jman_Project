@@ -63,13 +63,44 @@
   color: #333; /* Dark text color */
 }
 
-/* Calendar styles */
-.p-field Calender {
-  width: 100%;
-  border: 1px solid #a05757; /* Add border to calendar for better visibility */
-  border-radius: 4px;
-  border: 1px solid #0056b3;
+@layer reset,primereact;
+
+@layer reset{
+  /* Reset styles are now specific to the calendar class */
+  .p-calendar {
+    width: 100%;
+    border: 1px solid #a05757; /* Add border for better visibility */
+    border-radius: 4px;
+    background: #fff; /* Reset background to white */
+  }
 }
+
+/* Calendar styles (more specific overrides) */
+.p-calendar .p-calendar-header {
+  background-color: #f0f0f0; /* Override header background color */
+}
+
+.p-calendar table,
+.p-calendar .p-calendar-prev,
+.p-calendar .p-calendar-next,
+.p-calendar .p-calendar-weekdays,
+.p-calendar .p-calendar-daypanel {
+  color: #333; /* Set text color to black */
+}
+
+.p-calendar .p-calendar-day-content {
+  background-color: #f5f5f5; /* Set default day background color */
+}
+
+.p-calendar .p-calendar-selected td {
+  background-color: #0056b3; /* Set selected day background color */
+  color: #fff; /* Set selected day text color to white */
+}
+
+.p-calendar .p-calendar-other-month .p-calendar-day {
+  color: #ccc; /* Set days from other months to light gray */
+}
+
 
 /* Dropdown styles */
 .p-dropdown {
