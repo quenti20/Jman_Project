@@ -4,8 +4,8 @@ import WorkSessionCard from '../../../Components/WorkSessionCard/WorkSessionCard
 import UpdateWork from '../../../Components/UpdateWork/UpdateWork';
 import './EmployeeTraining.css';
 import AddTraining from '../../../Components/AddTraining/AddTraining';
-import AddModule from '../../../Components/AddModule/AddModule'; // Import AddModule component
-import UpdateModule from '../../../Components/UpdateModule/UpdateModule'; // Import UpdateModule component
+import AddModule from '../../../Components/AddModule/AddModule';
+import UpdateModule from '../../../Components/UpdateModule/UpdateModule';
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -24,16 +24,15 @@ const EmployeeTraining = () => {
   const [visibility, setVisibility] = useState(true);
   const [showUpdateWork, setShowUpdateWork] = useState(false);
   const [selectedWork, setSelectedWork] = useState(null);
-  const [showAddModule, setShowAddModule] = useState(false); // State for controlling AddModule visibility
-  const [showUpdateModule, setShowUpdateModule] = useState(false); // State for controlling UpdateModule visibility
-  const [selectedModule, setSelectedModule] = useState(null); // State to store selected module data for update
+  const [showAddModule, setShowAddModule] = useState(false);
+  const [showUpdateModule, setShowUpdateModule] = useState(false);
+  const [selectedModule, setSelectedModule] = useState(null);
 
   useEffect(() => {
     const fetchModules = async () => {
       try {
         const response = await axios.get('http://localhost:5000/getAllModules');
         const filteredModules = response.data.modules.filter(module => module.UserType === 'Employee');
-       // console.log('Modules:',filteredModules)
         setModules(filteredModules.map(module => ({
           ...module,
         })));
@@ -54,7 +53,6 @@ const EmployeeTraining = () => {
     const fetchWorks = async () => {
       try {
         const response = await axios.get('http://localhost:5000/getAllWorks');
-       // console.log('AllWorks',response.data)
         setWorks(response.data.works.map(work => ({
           ...work,
         })));
@@ -109,6 +107,30 @@ const EmployeeTraining = () => {
     setShowUpdateModule(true);
   };
 
+  const handleUpdateModule = async (updatedModuleData) => {
+    try {
+      await axios.put('http://localhost:5000/updateModule', updatedModuleData);
+      setModules(modules.map((module) => {
+        if (module._id === updatedModuleData.moduleId) {
+          return { ...module, ...updatedModuleData };
+        }
+        return module;
+      }));
+      setShowUpdateModule(false);
+    } catch (error) {
+      console.error('Error updating module:', error);
+    }
+  };
+
+  const handleDeleteModule = async (moduleId) => {
+    try {
+      await axios.delete(`http://localhost:5000/deleteModule/${moduleId}`);
+      setModules(modules.filter(module => module._id !== moduleId));
+    } catch (error) {
+      console.error('Error deleting module:', error);
+    }
+  };
+
   const calculateTimeInterval = (startTime, endTime) => {
     const start = new Date(startTime);
     const end = new Date(endTime);
@@ -118,7 +140,6 @@ const EmployeeTraining = () => {
 
   const filteredAndSortedWorkSessions = modules.map(module => {
     const filteredWorkSessions = works.filter(work => module.WorkSessions.includes(work._id));
-   // console.log(`Filtered work sessions for module ${module._id}:`, filteredWorkSessions);
     const sortedWorkSessions = filteredWorkSessions.sort((a, b) => new Date(a.date) - new Date(b.date));
     return {
       ...module,
@@ -129,7 +150,6 @@ const EmployeeTraining = () => {
   const getUniqueWorkSessionDates = () => {
     const uniqueDatesByModule = filteredAndSortedWorkSessions.map(module => {
       const uniqueDates = [...new Set(module.WorkSessions.map(work => work.date))];
-     // console.log(`Unique dates for module ${module._id}:`, uniqueDates);
       return {
         moduleId: module._id,
         uniqueDates: uniqueDates
@@ -140,9 +160,9 @@ const EmployeeTraining = () => {
   };
 
   return (
-    <div>
+    <div className='Fullpage'>
       <h2>Module List</h2>
-      <button onClick={() => setShowAddModule(true)}>Add Module</button> {/* Button to trigger AddModule */}
+      <button onClick={() => setShowAddModule(true)}>Add Module</button>
       <ul className="module-list">
         {modules.map((module) => (
           <li key={module._id} className="module">
@@ -151,7 +171,8 @@ const EmployeeTraining = () => {
               <button onClick={() => toggleDetails(module._id)}>
                 {showDetails[module._id] ? 'Hide Details' : 'Show Details'}
               </button>
-              <button onClick={() => handleUpdateModuleClick(module)}>Update Module</button> {/* Button to trigger UpdateModule */}
+              <button onClick={() => handleUpdateModuleClick(module)}>Update Module</button>
+              <button onClick={() => handleDeleteModule(module._id)}>Delete Module</button> {/* Button for deleting module */}
               {showDetails[module._id] && (
                 <button onClick={() => handleAddTrainingClick(module._id)}>Create Work</button>
               )}
@@ -166,7 +187,7 @@ const EmployeeTraining = () => {
                     {filteredAndSortedWorkSessions.find(mod => mod._id === module._id).WorkSessions.some(work => work.date === date) && (
                       <>
                         <h4 className="work-session-date">Work Sessions Date: {formatDate(date)}</h4>
-                        <ul>
+                        <ul className='SessionCard'>
                           {filteredAndSortedWorkSessions.find(mod => mod._id === module._id).WorkSessions.filter(work => work.date === date).map((work) => (
                             <li key={work._id}>
                               <WorkSessionCard className={`WorkSessionCard ${work.WorkType}`} work={work} />
@@ -190,10 +211,16 @@ const EmployeeTraining = () => {
       {showUpdateWork && (
         <UpdateWork work={selectedWork} visible={showUpdateWork} onHide={() => setShowUpdateWork(false)} onUpdate={handleUpdateWork} />
       )}
-      {showAddModule &&(
-      <AddModule visibility={showAddModule} setShowAddModule={setShowAddModule} />)} {/* Render AddModule component */}
+      {showAddModule && (
+        <AddModule visibility={showAddModule} setShowAddModule={setShowAddModule} />
+      )}
       {showUpdateModule && (
-        <UpdateModule visibility={showUpdateModule} moduleData={selectedModule} onHide={() => setShowUpdateModule(false)} />
+        <UpdateModule
+          visibility={showUpdateModule}
+          moduleData={selectedModule}
+          onHide={() => setShowUpdateModule(false)}
+          onUpdate={handleUpdateModule}
+        />
       )}
     </div>
   );

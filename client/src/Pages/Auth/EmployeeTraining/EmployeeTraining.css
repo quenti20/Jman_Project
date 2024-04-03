@@ -5,6 +5,12 @@ body {
   background-size: cover; 
   font-family: Arial, sans-serif;
   margin: 0;
+  color: #ffffff; /* Set text color to white */
+}
+
+.FullPage{
+  border-radius: 20px;
+  background: linear-gradient(black,grey);
 }
 
 .container {
@@ -24,14 +30,25 @@ h2 {
 
 .module {
   margin-bottom: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 20px;
-  background-image: url('../../../pics/ModulePic.jpg')!important;
+  background-image: linear-gradient(135deg, #ff6fd8, #3813cc, #17a2b8);
+  animation: gradientAnimation 5s ease infinite alternate; /* Apply animation */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+
 .module:hover {
-  background: linear-gradient(135deg, #36393f 0%, #43464d 100%);
+  background: linear-gradient(135deg, #58133c 0%, #1d1285 100%);
   animation: backgroundAnimation 0.5s ease;
 }
 
@@ -51,12 +68,16 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: linear-gradient(135deg, #362a42, #04045f); /* Violet to Blue gradient */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border-radius: 10px; /* Add border radius for rounded corners */
 }
 
 .module-header h3 {
   margin: 0;
-  color: #ffffff;
+  color: #ffffff; /* Set text color to white */
 }
+
 
 .module-header button {
   background-color: #4CAF50;
@@ -82,7 +103,6 @@ h2 {
 
 .module-details p {
   margin: 5px 0;
-  color: #d3c8c8;
 }
 
 /* WorkSessionCard */
@@ -100,47 +120,18 @@ h2 {
 
 .WorkSessionCard h3 {
   margin: 0;
-  color: #ffffff;
 }
 
 .WorkSessionCard p {
   margin: 5px 0;
-  color: #d3c8c8;
 }
 
 .work-session-date {
-  color: #ffffff; /* Set the color to white */
-}
-
-
-.WorkSessionCard.Assessment {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.WorkSessionCard.Training {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-}
-
-/* Update Work Sessions Date color */
-.WorkSessionCard h4 {
-  margin: 0;
-  color: #ffffff; /* Update the color to white */
-}
-
-/* Add animation to WorkSessionCard */
-.WorkSessionCard {
-  animation: cardAnimation 0.2s ease;
-}
-
-@keyframes cardAnimation {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  color: white;
+  margin-bottom: 20px;
+  border-radius: 10px; /* Set border radius to make edges round */
+  background: linear-gradient(135deg, violet, blue);
+    padding: 20px;
 }
 
 /* Update and Delete Buttons */
@@ -155,10 +146,30 @@ h2 {
   transition: background-color 0.3s ease;
 }
 
-.update-button:hover, .delete-button:hover {
+.WorkSessionCard button:hover {
   background-color: #0056b3;
 }
 
-.update-button:focus, .delete-button:focus {
+.WorkSessionCard button:focus {
   outline: none;
+}
+
+/* Add animation to WorkSessionCard */
+.WorkSessionCard {
+  animation: cardAnimation 0.2s ease;
+}
+.SessionCard{
+  display: flex;
+  flex-direction: row  ;
+  justify-content: space-evenly;
+}
+@keyframes cardAnimation {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
