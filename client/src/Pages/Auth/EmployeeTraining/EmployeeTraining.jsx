@@ -4,6 +4,8 @@ import WorkSessionCard from '../../../Components/WorkSessionCard/WorkSessionCard
 import UpdateWork from '../../../Components/UpdateWork/UpdateWork';
 import './EmployeeTraining.css';
 import AddTraining from '../../../Components/AddTraining/AddTraining';
+import AddModule from '../../../Components/AddModule/AddModule'; // Import AddModule component
+import UpdateModule from '../../../Components/UpdateModule/UpdateModule'; // Import UpdateModule component
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -22,12 +24,16 @@ const EmployeeTraining = () => {
   const [visibility, setVisibility] = useState(true);
   const [showUpdateWork, setShowUpdateWork] = useState(false);
   const [selectedWork, setSelectedWork] = useState(null);
+  const [showAddModule, setShowAddModule] = useState(false); // State for controlling AddModule visibility
+  const [showUpdateModule, setShowUpdateModule] = useState(false); // State for controlling UpdateModule visibility
+  const [selectedModule, setSelectedModule] = useState(null); // State to store selected module data for update
 
   useEffect(() => {
     const fetchModules = async () => {
       try {
         const response = await axios.get('http://localhost:5000/getAllModules');
         const filteredModules = response.data.modules.filter(module => module.UserType === 'Employee');
+       // console.log('Modules:',filteredModules)
         setModules(filteredModules.map(module => ({
           ...module,
         })));
@@ -48,6 +54,7 @@ const EmployeeTraining = () => {
     const fetchWorks = async () => {
       try {
         const response = await axios.get('http://localhost:5000/getAllWorks');
+       // console.log('AllWorks',response.data)
         setWorks(response.data.works.map(work => ({
           ...work,
         })));
@@ -97,6 +104,11 @@ const EmployeeTraining = () => {
     }
   };
 
+  const handleUpdateModuleClick = (module) => {
+    setSelectedModule(module);
+    setShowUpdateModule(true);
+  };
+
   const calculateTimeInterval = (startTime, endTime) => {
     const start = new Date(startTime);
     const end = new Date(endTime);
@@ -104,29 +116,33 @@ const EmployeeTraining = () => {
     return interval;
   };
 
-  const calculateTotalHours = (worksByDate) => {
-    let totalHours = 0;
-    worksByDate.forEach((work) => {
-      const interval = calculateTimeInterval(work.start_time, work.end_time);
-      totalHours += interval;
-    });
-    return totalHours.toFixed(2);
-  };
-
-  const calculateHoursLeft = (worksByDate) => {
-    const totalHours = calculateTotalHours(worksByDate);
-    const hoursLeft = 8 - totalHours;
-    return hoursLeft.toFixed(2);
-  };
+  const filteredAndSortedWorkSessions = modules.map(module => {
+    const filteredWorkSessions = works.filter(work => module.WorkSessions.includes(work._id));
+   // console.log(`Filtered work sessions for module ${module._id}:`, filteredWorkSessions);
+    const sortedWorkSessions = filteredWorkSessions.sort((a, b) => new Date(a.date) - new Date(b.date));
+    return {
+      ...module,
+      WorkSessions: sortedWorkSessions
+    };
+  });
 
   const getUniqueWorkSessionDates = () => {
-    const uniqueDates = [...new Set(works.map(work => work.date))];
+    const uniqueDatesByModule = filteredAndSortedWorkSessions.map(module => {
+      const uniqueDates = [...new Set(module.WorkSessions.map(work => work.date))];
+     // console.log(`Unique dates for module ${module._id}:`, uniqueDates);
+      return {
+        moduleId: module._id,
+        uniqueDates: uniqueDates
+      };
+    });
+    const uniqueDates = [...new Set(uniqueDatesByModule.flatMap(module => module.uniqueDates))];
     return uniqueDates.sort((a, b) => new Date(a) - new Date(b));
   };
 
   return (
     <div>
       <h2>Module List</h2>
+      <button onClick={() => setShowAddModule(true)}>Add Module</button> {/* Button to trigger AddModule */}
       <ul className="module-list">
         {modules.map((module) => (
           <li key={module._id} className="module">
@@ -135,6 +151,7 @@ const EmployeeTraining = () => {
               <button onClick={() => toggleDetails(module._id)}>
                 {showDetails[module._id] ? 'Hide Details' : 'Show Details'}
               </button>
+              <button onClick={() => handleUpdateModuleClick(module)}>Update Module</button> {/* Button to trigger UpdateModule */}
               {showDetails[module._id] && (
                 <button onClick={() => handleAddTrainingClick(module._id)}>Create Work</button>
               )}
@@ -146,16 +163,20 @@ const EmployeeTraining = () => {
                 <p><strong>Date:</strong> {formatDate(module.Date)}</p>
                 {getUniqueWorkSessionDates().map((date) => (
                   <div key={date}>
-                    <h4 className="work-session-date">Work Sessions Date: {formatDate(date)}</h4>
-                    <ul>
-                      {works.filter(work => work.date === date).map((work) => (
-                        <li key={work._id}>
-                          <WorkSessionCard className={`WorkSessionCard ${work.WorkType}`} work={work} />
-                          <button onClick={() => handleUpdateWorkClick(work)}>Update Work</button>
-                          <button onClick={() => handleDeleteWork(work._id, module._id)}>Delete Work</button>
-                        </li>
-                      ))}
-                    </ul>
+                    {filteredAndSortedWorkSessions.find(mod => mod._id === module._id).WorkSessions.some(work => work.date === date) && (
+                      <>
+                        <h4 className="work-session-date">Work Sessions Date: {formatDate(date)}</h4>
+                        <ul>
+                          {filteredAndSortedWorkSessions.find(mod => mod._id === module._id).WorkSessions.filter(work => work.date === date).map((work) => (
+                            <li key={work._id}>
+                              <WorkSessionCard className={`WorkSessionCard ${work.WorkType}`} work={work} />
+                              <button onClick={() => handleUpdateWorkClick(work)}>Update Work</button>
+                              <button onClick={() => handleDeleteWork(work._id, module._id)}>Delete Work</button>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
                   </div>
                 ))}
               </div>
@@ -168,6 +189,11 @@ const EmployeeTraining = () => {
       )}
       {showUpdateWork && (
         <UpdateWork work={selectedWork} visible={showUpdateWork} onHide={() => setShowUpdateWork(false)} onUpdate={handleUpdateWork} />
+      )}
+      {showAddModule &&(
+      <AddModule visibility={showAddModule} setShowAddModule={setShowAddModule} />)} {/* Render AddModule component */}
+      {showUpdateModule && (
+        <UpdateModule visibility={showUpdateModule} moduleData={selectedModule} onHide={() => setShowUpdateModule(false)} />
       )}
     </div>
   );

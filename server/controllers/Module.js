@@ -69,7 +69,7 @@ exports.updateModule = async (req, res) => {
 
         // If the module was not found, return a 404 error
         if (!updatedModule) {
-            return res.status(404).json({ error: 'Module not found' });
+            return res.status(404).json({ error: 'Module not found' }); 
         }
 
         // Send a success response

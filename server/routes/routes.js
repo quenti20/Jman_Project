@@ -7,7 +7,7 @@ const PerformanceController = require('../controllers/Performance')
 const AssessmentController = require('../controllers/Assessment')
 const CombinedController = require('../controllers/Work')
 const TrainerController = require('../controllers/Trainer')
-router.post('/newUser', userController.createNewUser)
+router.post('/newUser', userController.createNewUser) 
 router.post('/login', userController.userLogin)
 router.put('/changePassword/:id', userController.changePassword) 
 
@@ -17,7 +17,7 @@ router.post('/createModule', moduleController.createModule);
 router.post('/createTrainer', TrainerController.createTrainer);
 
 router.get('/getAllWorks', CombinedController.getWorks);
-router.get('/getAllModules', moduleController.getModules);
+router.get('/getAllModules', moduleController.getModules); 
 
 
 

@@ -30,7 +30,8 @@ const AddModule = ({ visibility, setShowAddModule }) => {
                 TrainingName: trainingName,
                 Coe_Name: coeName,
                 UserType: 'Employee', // Fixed value for UserType
-                Date: date
+                Date: date,
+                WorkSessions: [] // Initialize WorkSessions array as it's not needed in AddModule
             };
             await axios.post('http://localhost:5000/createModule', data);
             hideDialog();

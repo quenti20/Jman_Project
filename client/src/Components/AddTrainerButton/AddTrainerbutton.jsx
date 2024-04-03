@@ -21,7 +21,7 @@ const AddTrainerButton = () => {
 
     const handleAddTrainer = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/trainer', { name: trainerName });
+            const response = await axios.post('http://localhost:5000/api/trainer', { name: trainerName });
             console.log('Trainer added:', response.data.trainer);
             // Close the dialog after adding the trainer
             hideDialog();
