@@ -160,7 +160,7 @@ const EmployeeTraining = () => {
   };
 
   return (
-    <div className='Fullpage'>
+    <div className='Full'>
       <h2>Module List</h2>
       <button onClick={() => setShowAddModule(true)}>Add Module</button>
       <ul className="module-list">
