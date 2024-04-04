@@ -8,7 +8,9 @@ import InternTraining from './Pages/Auth/InternTraining/InternTraining'; // Impo
 import AdminDashboard from './Pages/Auth/AdminDashboard/AdminDashboard';
 import EmployeeTraining from './Pages/Auth/EmployeeTraining/EmployeeTraining'
 import EmployeeVisual from './Pages/Auth/EmployeeVisual/EmployeeVisual'
-import InternVisual from './Pages/Auth/InternVisual/InternVisual'; // Import the
+import InternVisual from './Pages/Auth/InternVisual/InternVisual'; 
+import UploadFile from './Components/UploadFile/UploadFile';
+import ViewPerformance from './Pages/Auth/UserPerformance/UserPerformance';
 function App() {
   return (
     <div>
@@ -19,11 +21,12 @@ function App() {
           <Route path='/admin' element={<NewUser />} />
           <Route path='/changePassword' element={<ChangePassword />} />
           <Route path='/internPlan' element= {<><Navbar /> <InternTraining /> </>     } /> 
-          <Route path='/adminDashboard' element= {<><Navbar /> <AdminDashboard /> </>     } />
-          <Route path='/employeePlan' element= {<><Navbar /> <EmployeeTraining /> </>} />           
+          <Route path='/adminDashboard' element= {<AdminDashboard />} />
+          <Route path='/employeePlan' element= {<> <EmployeeTraining /> </>} />           
           <Route path='/employeeVisual' element= {<><Navbar /> <EmployeeVisual /> </>} /> 
-          <Route path='/internVisual' element= {<><Navbar /> <InternVisual /> </>} /> 
-
+          <Route path='/internVisual' element= {<> <InternVisual /> </>} /> 
+          <Route path='/uploadFile' element= {<><Navbar /> <UploadFile/> </>} /> 
+          <Route path='/viewPerformance' element= {<><Navbar /> <ViewPerformance/> </>} />
         </Routes>
       </BrowserRouter>
     </div>

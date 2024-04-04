@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import './NewUser.css';
+//import './NewUser.css';
 import { Link, useNavigate } from 'react-router-dom';
 import AddTrainerButton from '../../../Components/AddTrainerButton/AddTrainerbutton'; // Import AddTrainerButton component
 
 const NewUser = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [userType, setUserType] = useState('User');
+  const [userType, setUserType] = useState('Intern'); // Default value set to 'Intern'
 
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const NewUser = () => {
         navigate('/admin');
         setEmail('');
         setName('');
-        setUserType('User');
+        setUserType('Intern'); // Reset userType to default after successful user creation
       } else {
         alert('Internal server error !');
       }

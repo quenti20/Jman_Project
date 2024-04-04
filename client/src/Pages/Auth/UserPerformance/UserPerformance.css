@@ -1,0 +1,56 @@
+.UserPerformanceDetailsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+.PerformanceContainer {
+    background-color: #311e1e;
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Added margin-top to separate from navbar */
+}
+
+.TestReportsHeader {
+    margin-bottom: 10px; /* Reduced margin */
+}
+
+.UserInfoContainer {
+    background-color: #200e0e;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px; /* Reduced margin */
+}
+
+.AssessmentContainer {
+    background-color: #2b0e0e;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Display assessments in a row */
+}
+
+.AssessmentItem {
+    margin-right: 20px; /* Added margin between assessments */
+    margin-bottom: 20px;
+    background: linear-gradient(rgb(48, 19, 19),rgb(54, 2, 22));
+    border-bottom: 1px solid #1a0c0c;
+    border-radius: 20px;
+    padding-bottom: 20px;
+    flex: 0 0 calc(50% - 20px); /* Make assessments take up half of the container */
+    transition: all 0.3s ease; /* Add transition effect */
+}
+
+.AssessmentItem:hover {
+    transform: scale(1.05); /* Zoom in effect on hover */
+    background: #312058; /* Change background color on hover */
+}
+
+.AssessmentItem:last-child {
+    border-bottom: none;
+    margin-right: 0; /* Remove margin from last assessment */
+}

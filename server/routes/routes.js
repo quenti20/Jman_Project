@@ -9,7 +9,8 @@ const CombinedController = require('../controllers/Work')
 const TrainerController = require('../controllers/Trainer')
 router.post('/newUser', userController.createNewUser) 
 router.post('/login', userController.userLogin)
-router.put('/changePassword/:id', userController.changePassword) 
+router.put('/changePassword/:id', userController.changePassword)
+router.get('/getUser/:id',userController.getUserData) ; 
 
 
 router.post('/createWork', CombinedController.createWork);
@@ -29,8 +30,12 @@ router.put('/updateModule', moduleController.updateModule);
 router.delete('/deleteWork/:id', CombinedController.deleteWork);
 router.delete('/deleteModule/:id', moduleController.deleteModule);
 
+router.post('/AllPerformance', PerformanceController.postPerformance);
+router.get('/getAllPerformance', PerformanceController.getAllPerformance);
+router.delete('/deleteAllPerformance', PerformanceController.deleteAllPerformance);
 
-module.exports = router;
+
+module.exports = router; 
 
 // admin API:  
 

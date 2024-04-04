@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const validUserTypes = ['Admin', 'Intern', 'Employee'];
+
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -21,7 +23,9 @@ const userSchema = new mongoose.Schema({
         maxLength: 100
     },
     userType: {
-        type: String
+        type: String,
+        enum: validUserTypes, // Restrict to specified values
+        required: true
     },
     hasChanged: {
         type: Boolean

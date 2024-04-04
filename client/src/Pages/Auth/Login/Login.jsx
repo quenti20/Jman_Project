@@ -25,10 +25,10 @@ const Login = () => {
                     }
                     else{
                          if(res.data.user.userType == 'Employee'){
-                            navigate('/employee')
+                            navigate('/employeeVisual')
                          }
-                         else{
-                            navigate('/intern')
+                         else {
+                            navigate('/internVisual')
                          }
                     }
                 }

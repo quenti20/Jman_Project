@@ -24,7 +24,7 @@ const AddModule = ({ visibility, setShowAddModule }) => {
         setDate(null);
     };
 
-    const handleSave = async () => {
+    const handleSave = async () => { 
         try {
             const data = {
                 TrainingName: trainingName,
