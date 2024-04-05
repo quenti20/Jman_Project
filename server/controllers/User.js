@@ -1,26 +1,41 @@
 const User = require('../models/User')
 const nodemailer = require('nodemailer');
 
+const jwt = require('jsonwebtoken');
+
+
 exports.userLogin = async (req, res) => {
     const { email, password } = req.body;
     try {
-        if (!email) {
-            return res.status(404).json({ error: 'password not found' });
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password are required' });
         }
+
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        // const isPasswordValid = await bcrypt.compare(password, user.password);
-        const isPasswordValid = password == user.password
-        if (!isPasswordValid) {
+
+        // Compare plaintext password with stored password
+        if (password !== user.password) {
             return res.status(401).json({ error: 'Invalid password' });
         }
-        return res.status(200).json({ message: 'Login successful', user });
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: user._id, email: user.email, userType: user.userType},
+            'qwe2131', // Use your actual secret key
+            { expiresIn: '1h' } // Token expires in 1 hour
+        );
+
+        return res.status(200).json({ message: 'Login successful', token, userType: user.userType,hasChanged:user.hasChanged });
     } catch (error) {
         res.status(500).send(error.message);
     }
-}
+};
+
+
+
 exports.createNewUser = async (req, res) => {
     try {
         const { email, name, userType } = req.body;

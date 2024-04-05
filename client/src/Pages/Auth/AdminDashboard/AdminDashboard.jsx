@@ -25,9 +25,9 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     // Fetch user data from local storage or API
-    const userId = localStorage.getItem('id'); // Assuming you store the user id in local storage
-    if (userId) {
-      axios.get(`http://localhost:5000/getUser/${userId}`)
+    const token = localStorage.getItem('token'); // Assuming you store the user id in local storage
+    if (token) {
+      axios.get(`http://localhost:5000/getUser/${token}`)
         .then(response => {
           setUserData(response.data.user);
         })
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
       {userData ?
         <div>
           <NavBar />
-          {localStorage.getItem('isHome') === true ? 
+          {localStorage.getItem('isHome') === 'true' ? 
             <CreateUser />  : localStorage.getItem('isEmployeePlan') === 'true' ? 
             <TrainingPage /> : localStorage.getItem('isInternPlan') === 'true' ? 
             <InternPlan /> : localStorage.getItem('isUpload') === 'true' ? 

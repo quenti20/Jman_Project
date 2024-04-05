@@ -7,10 +7,12 @@ const PerformanceController = require('../controllers/Performance')
 const AssessmentController = require('../controllers/Assessment')
 const CombinedController = require('../controllers/Work')
 const TrainerController = require('../controllers/Trainer')
+const verifytoken = require('../middleware/verify')
+
 router.post('/newUser', userController.createNewUser) 
 router.post('/login', userController.userLogin)
 router.put('/changePassword/:id', userController.changePassword)
-router.get('/getUser/:id',userController.getUserData) ; 
+router.get('/getUser/:id',verifytoken, userController.getUserData) ; 
 
 
 router.post('/createWork', CombinedController.createWork);

@@ -1,7 +1,8 @@
 /*Dark mode styling */
   body {
-  background-image: url('../../../pics/ModulePic.jpg');
-  background-repeat: no-repeat;
+  background-image: url('../../../pics/bgpic2.jpg');
+  /* background-image: linear-gradient(rgb(35, 4, 37),rgb(252, 241, 241)); */
+  /* background-repeat: no-repea; */
   background-size: cover; 
   font-family: Arial, sans-serif;
   margin: 0;

@@ -19,7 +19,7 @@ const NewUser = () => {
       const res = await axios.post('http://localhost:5000/newUser', { email, name, userType });
       if (res.status === 200) {
         alert('User Created Successfully !');
-        navigate('/admin');
+        navigate('/adminDashboard');
         setEmail('');
         setName('');
         setUserType('Intern'); // Reset userType to default after successful user creation

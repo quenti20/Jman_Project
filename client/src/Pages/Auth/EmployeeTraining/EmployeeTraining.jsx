@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import WorkSessionCard from '../../../Components/WorkSessionCard/WorkSessionCard';
 import UpdateWork from '../../../Components/UpdateWork/UpdateWork';
-//import './EmployeeTraining.css';
+import './EmployeeTraining.css';
 import AddTraining from '../../../Components/AddTraining/AddTraining';
 import AddModule from '../../../Components/AddModule/AddModule';
 import UpdateModule from '../../../Components/UpdateModule/UpdateModule';
+
+
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);

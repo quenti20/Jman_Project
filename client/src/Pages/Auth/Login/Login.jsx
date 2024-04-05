@@ -15,21 +15,19 @@ const Login = () => {
         try {
             const res = await axios.post('http://localhost:5000/login', {email, password})
             if(res.status == 200){
-                localStorage.setItem('id', res.data.user._id)
-                if(res.data.user.userType == 'Admin'){
+                localStorage.setItem("token",res.data.token)
+                localStorage.setItem("userType",res.data.userType)
+                console.log(res.data) 
+                // localStorage.setItem('id', res.data.user._id)
+                if(res.data.userType == 'Admin'){
                     navigate('/adminDashboard')
                 }
                 else{
-                    if(res.data.user.hasChanged == false){
+                    if(res.data.hasChanged === false){
                         navigate('/changePassword')
                     }
-                    else{
-                         if(res.data.user.userType == 'Employee'){
-                            navigate('/employeeVisual')
-                         }
-                         else {
-                            navigate('/internVisual')
-                         }
+                    else if(res.data.userType === 'Employee' || res.data.userType === 'Intern'){
+                        navigate('/userDashboard') 
                     }
                 }
             }

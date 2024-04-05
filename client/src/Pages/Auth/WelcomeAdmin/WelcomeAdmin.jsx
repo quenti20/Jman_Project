@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const WelcomePage = () => {
   const [user, setUser] = useState(null);
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem('id');
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`https://localhost:5000/getuser/${userId}`);
-        if (response.ok) {
-          const userData = await response.json();
+        const response = await axios.get(`http://localhost:5000/getUser/${userId}`);
+        if (response.status === 200) {
+          const userData = response.data.user;
           console.log(userData);
           setUser(userData);
         } else {
@@ -25,10 +26,34 @@ const WelcomePage = () => {
     }
   }, [userId]);
 
+  let welcomeMessage = '';
+  if (user) {
+    console.log(user);
+    switch (user.userType) {
+      
+      case 'Admin':
+        welcomeMessage = `Welcome Admin ${user.name}`;
+        break;
+      case 'Intern':
+        welcomeMessage = `Welcome Intern ${user.name}`;
+        console.log("I am Intern")
+        break;
+      case 'Employee':
+        welcomeMessage = `Welcome Employee ${user.name}`;
+        break;
+      default:
+        welcomeMessage = `Welcome ${user.name}`;
+        break;
+    }
+  }
+
   return (
     <div>
       {user ? (
-        <p>Welcome Admin {user.name}</p>
+        <div>
+          <p>{welcomeMessage}</p>
+          <p>Email: {user.email}</p>
+        </div>
       ) : (
         <p>Loading...</p>
       )}
