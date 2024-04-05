@@ -2,13 +2,15 @@ import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from '../../../Components/AdminNavbar/Navbar';
 import TrainingPage from '../EmployeeTraining/EmployeeTraining';
-import HomePage from '../../../Components/AddTrainerButton/AddTrainerbutton';
+import CreateUser from '../../../Pages/Auth/UserCreation/NewUser';
 import UploadFile from '../../../Components/UploadFile/UploadFile';
 import InternPlan from '../InternTraining/InternTraining';
+//import { NavContext } from './NavContext'; // Import NavContext
 
 export const NavContext = createContext();
 
 const AdminDashboard = () => {
+  //console.log(localStorage.getItem('id'));
   if (!localStorage.getItem('isHome')) {
     localStorage.setItem('isHome', true);
     localStorage.setItem('isEmployeePlan', false);
@@ -40,8 +42,8 @@ const AdminDashboard = () => {
       {userData ?
         <div>
           <NavBar />
-          {localStorage.getItem('isHome') === 'true' ? 
-            <HomePage /> : localStorage.getItem('isEmployeePlan') === 'true' ? 
+          {localStorage.getItem('isHome') === true ? 
+            <CreateUser />  : localStorage.getItem('isEmployeePlan') === 'true' ? 
             <TrainingPage /> : localStorage.getItem('isInternPlan') === 'true' ? 
             <InternPlan /> : localStorage.getItem('isUpload') === 'true' ? 
             <UploadFile /> : <></>}

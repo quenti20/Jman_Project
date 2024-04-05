@@ -1,0 +1,68 @@
+/* UserNavbar.css */
+
+/* Dark mode styles */
+.UserNavbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f1f1f; /* Dark background color */
+    padding: 10px 20px;
+}
+
+.UserNavbar-items {
+    flex: 1;
+    margin-right: 20%;
+    text-align: center; /* Center align text */
+}
+
+.UserNavbar-menu-items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.UserNavbar-menu-item {
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+    color: #fff; /* White text color */
+    font-size: 16px;
+}
+
+.UserNavbar-menu-item:hover {
+    text-decoration: underline;
+}
+
+.UserNavbar-profile-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.UserNavbar-profile-icon {
+    border-radius: 50%;
+}
+
+.UserNavbar-dropdown-content {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #1f1f1f; /* Dark background color */
+    border: 1px solid #444; /* Darker border color */
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.UserNavbar-dropdown-content button {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: #fff; /* White text color */
+    padding: 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.UserNavbar-dropdown-content button:hover {
+    background-color: #333; /* Darker background color on hover */
+}

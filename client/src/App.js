@@ -11,6 +11,9 @@ import EmployeeVisual from './Pages/Auth/EmployeeVisual/EmployeeVisual'
 import InternVisual from './Pages/Auth/InternVisual/InternVisual'; 
 import UploadFile from './Components/UploadFile/UploadFile';
 import ViewPerformance from './Pages/Auth/UserPerformance/UserPerformance';
+import UserDashBoard from './Pages/Auth/UserDashboard/UserDashboard';
+
+
 function App() {
   return (
     <div>
@@ -19,11 +22,12 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} /> 
           <Route path='/admin' element={<NewUser />} />
+          <Route path='/internDashboard' element={<UserDashBoard />} />
           <Route path='/changePassword' element={<ChangePassword />} />
-          <Route path='/internPlan' element= {<><Navbar /> <InternTraining /> </>     } /> 
+          <Route path='/internPlan' element= {<> <InternTraining /> </>     } /> 
           <Route path='/adminDashboard' element= {<AdminDashboard />} />
           <Route path='/employeePlan' element= {<> <EmployeeTraining /> </>} />           
-          <Route path='/employeeVisual' element= {<><Navbar /> <EmployeeVisual /> </>} /> 
+          <Route path='/employeeVisual' element= {<> <EmployeeVisual /> </>} /> 
           <Route path='/internVisual' element= {<> <InternVisual /> </>} /> 
           <Route path='/uploadFile' element= {<><Navbar /> <UploadFile/> </>} /> 
           <Route path='/viewPerformance' element= {<><Navbar /> <ViewPerformance/> </>} />

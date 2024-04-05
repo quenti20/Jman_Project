@@ -17,7 +17,7 @@ const Login = () => {
             if(res.status == 200){
                 localStorage.setItem('id', res.data.user._id)
                 if(res.data.user.userType == 'Admin'){
-                    navigate('/admin')
+                    navigate('/adminDashboard')
                 }
                 else{
                     if(res.data.user.hasChanged == false){
@@ -43,7 +43,7 @@ const Login = () => {
 
     return (
         <div>
-            <div className="card">
+            <div className="cardLogin">
                 <form className='login-form'>
                     <input 
                         type="text" 

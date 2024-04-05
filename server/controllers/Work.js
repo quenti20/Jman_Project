@@ -143,5 +143,5 @@ exports.deleteWork = async (req, res) => {
         // If an error occurs, send an error response
         console.error('Error deleting work:', error);
         res.status(500).json({ error: 'Internal server error' });
-    }
+    }  
 };

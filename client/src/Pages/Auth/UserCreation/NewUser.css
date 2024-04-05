@@ -1,112 +1,63 @@
+.newUser-container {
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  width: 350px;
+  border-radius: 5px;
+  background-color: #d0b7b7;
+  text-align: center;
+  margin: auto;
+  margin-top: 100px;
+}
 
-/* body{
-  font-family: Arial, sans-serif;
-  background-color: #9a9da0;
-} */
+.newUser-create-user input,
+.newUser-create-user select {
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
 
- /* body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(45deg, #FFA07A, #87CEEB); /* Example gradient colors */
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; */
-  /* } */ 
-  
-  /* Card Styles */
-  .NewUsercard {
-    padding: 40px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle box shadow */
-    width: 350px; /* Adjust width as needed */
-    border-radius: 5px; /* Softer corners */
-    background-color: #d0b7b7; /* Pure white background */
-    text-align: center;
-    margin: auto;
-    margin-top: 100px;
-  }
-  
-  /* Card Heading Styles */
-  .card h2 {
-    margin-bottom: 20px;
-    font-size: 20px; /* Slightly smaller heading size */
-    color: #333; /* Darker heading color */
-  }
-  
-  /* Create User Form Styles */
-  .create-user {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .create-user input,
-  .create-user select {
-    margin-bottom: 15px; /* Reduce spacing between fields */
-    padding: 10px 15px; /* Adjust padding for better proportions */
-    border: 1px solid #ccc; /* Lighter border color */
-    border-radius: 4px; /* More subtle border corners */
-    width: 100%;
-    font-size: 16px;
-    transition: all 0.3s ease-in-out; /* Smooth transition for all properties */
-  }
-  
-  .create-user input:focus,
-  .create-user select:focus {
-    border-color: #007bff; /* Blue border on focus */
-    outline: none; /* Remove default browser outline */
-  }
-  
-  /* Create User Button Styles */
-  .create-user button {
-    color: #fff;
-    background-color: #9a9da0; /* Primary blue color */
-    padding: 10px 20px; /* Adjust padding for better button size */
-    font-size: 16px; /* Consistent font size */
-    font-weight: bold;
-    letter-spacing: 1px; /* Slightly tighter letter spacing */
-    border: none;
-    border-radius: 4px; /* Matches other elements' border radius */
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .create-user button:hover {
-    background-color: #040b13; /* Darker blue on hover */
-  }
-  
-  /* Link Styles */
-  .link {
-    margin-top: 15px; /* Reduced spacing for cleaner layout */
-  }
-  
-  .link a {
-    color: #007bff; /* Match link color with button */
-    text-decoration: none;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .link a:hover {
-    color: #0069d9; /* Darker blue on hover for link */
-  }
-  
-  /* Button Styles */
-.navigation-buttons button {
+.newUser-create-user input:focus,
+.newUser-create-user select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.newUser-create-user button {
   color: #fff;
-  background-color: #313336; /* Blue color */
-  padding: 10px 20px; /* Adjust padding for better button size */
-  font-size: 16px; /* Consistent font size */
+  background-color: #9a9da0;
+  padding: 10px 20px;
+  font-size: 16px;
   font-weight: bold;
-  letter-spacing: 1px; /* Slightly tighter letter spacing */
+  letter-spacing: 1px;
   border: none;
-  border-radius: 4px; /* Matches other elements' border radius */
-  width: 150px; /* Adjust width as needed */
+  border-radius: 4px;
+  width: 100%;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
 
-.navigation-buttons button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+.newUser-create-user button:hover {
+  background-color: #040b13;
+}
+
+.newUser-navigation-buttons button {
+  color: #fff;
+  background-color: #313336;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 4px;
+  width: 150px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.newUser-navigation-buttons button:hover {
+  background-color: #0056b3;
 }

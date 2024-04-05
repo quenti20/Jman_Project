@@ -1,28 +1,80 @@
-/* .navbar {
-    background-color: #333;
+/* Navbar container */
+.Admin_Navbar-container {
+  background: linear-gradient(135deg, #333, #2e2b2b); /* Dark gradient background */
+  border-bottom: 2px solid #444; /* Dark border */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    
-  }
-  
-  .navbar-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 20px;
-  }
-  
-  .nav-link {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .nav-link:not(:last-child) {
-    margin-right: 20px;
-  }
-   */
+/* Logo */
+.Admin_Navbar-logo {
+  width: 100px; /* Adjust width as needed */
+}
 
-  .menubar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+/* Menu items */
+.Admin_Navbar-menu-items {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.Admin_Navbar-menu-item {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.Admin_Navbar-menu-item:last-child {
+  margin-right: 0;
+}
+
+.Admin_Navbar-menu-item-label {
+  color: #c5bebe; /* White text color */
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold; /* Bold font weight */
+ /* text-transform: uppercase; /* Uppercase text */
+    margin: 20px 20px 20px 20px;
+}
+
+/* Profile container */
+.Admin_Navbar-profile-container {
+  position: relative;
+}
+
+/* Profile icon */
+.Admin_Navbar-profile-icon {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  border-radius: 50%; /* Circular shape */
+  cursor: pointer;
+}
+
+/* Dropdown content */
+.Admin_Navbar-dropdown-content {
+  position: absolute;
+  top: 50px; /* Adjust distance from profile icon */
+  right: 0;
+  background-color: #444; /* Darker background color */
+  border: 1px solid #666; /* Dark border */
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Admin_Navbar-dropdown-content button {
+  color: #fff; /* White text color */
+  background-color: #007bff; /* Blue button color */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.Admin_Navbar-dropdown-content button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
