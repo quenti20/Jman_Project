@@ -29,8 +29,8 @@ function App() {
           <Route path='/employeePlan' element= {<> <EmployeeTraining /> </>} />           
           <Route path='/employeeVisual' element= {<> <EmployeeVisual /> </>} /> 
           <Route path='/internVisual' element= {<> <InternVisual /> </>} /> 
-          <Route path='/uploadFile' element= {<><Navbar /> <UploadFile/> </>} /> 
-          <Route path='/viewPerformance' element= {<><Navbar /> <ViewPerformance/> </>} />
+          <Route path='/uploadFile' element= {<> <UploadFile/> </>} /> 
+          <Route path='/viewPerformance' element= {<> <ViewPerformance/> </>} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,10 +1,15 @@
 import React, { useContext, useState } from 'react';
 import './Navbar.css'; // Import CSS for styling
 import { NavContext } from '../../Pages/Auth/AdminDashboard/AdminDashboard'; // Import NavContext
+import { useNavigate } from 'react-router-dom';
+
+
 
 const AdminNavbar = () => {
-  const { setIsHome, setIsEmployeePlan, setIsInternPlan, setIsUpload } = useContext(NavContext);
+  const { setIsHome, setIsEmployeePlan, setIsInternPlan, setIsUpload ,setisUpdatePassword } = useContext(NavContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleMenuItemClick = (menuItem) => {
     // Handle menu item click based on label or other properties
@@ -58,6 +63,35 @@ const AdminNavbar = () => {
 
   const handleProfileClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
+
+    console.log('Clicked on Profile Handler');
+
+  };
+
+  const handleDropDownClick = (dropdownItem) => {
+    console.log('Clicked on DropDown Handler');
+
+    switch(dropdownItem){
+      case 'Update Password':
+        localStorage.setItem('isHome', false);
+        localStorage.setItem('isEmployeePlan', false);
+        localStorage.setItem('isInternPlan', false);
+        localStorage.setItem('isUpload', false);
+        localStorage.setItem('isUpdatePassword', true);
+        setIsHome(false);
+        setIsEmployeePlan(false);
+        setIsInternPlan(false);
+        setIsUpload(false); 
+        setisUpdatePassword(true)
+        break;
+      case 'Log Out':
+        localStorage.clear();
+        navigate('/login') ;
+        break;
+      default:
+        break;
+    }
+
   };
 
   return (
@@ -84,13 +118,13 @@ const AdminNavbar = () => {
             <span className="Admin_Navbar-menu-item-label">Upload Results</span>
           </li>
         </ul>
-      </div>
-      <div className="Admin_Navbar-profile-container" onClick={handleProfileClick}>
+        </div>
+        <div className="Admin_Navbar-profile-container" onClick={handleProfileClick}>
         <img alt="profile" src='./pics/prof_pic.jpg' height="40" className="Admin_Navbar-profile-icon"></img>
         {isDropdownOpen && (
           <div className="Admin_Navbar-dropdown-content">
-            <button>Update Password</button>
-            <button>Log Out</button>
+            <button onClick={() => handleDropDownClick('Update Password')}>Update Password</button>
+            <button onClick={() => handleDropDownClick('Log Out')}>Log Out</button>
           </div>
         )}
       </div>

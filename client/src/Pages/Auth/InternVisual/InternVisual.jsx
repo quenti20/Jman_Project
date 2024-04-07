@@ -15,35 +15,45 @@ const EmployeeTraining = () => {
   const [loadingWorks, setLoadingWorks] = useState(true);
   const [showDetails, setShowDetails] = useState({});
 
+  const userType = localStorage.getItem('userType');
+
   useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/getAllModules');
-        const filteredModules = response.data.modules.filter(module => module.UserType === 'Intern');
-        setModules(filteredModules.map(module => ({ ...module })));
-        setLoadingModules(false);
-        setShowDetails(filteredModules.reduce((acc, module) => {
-          acc[module._id] = false;
-          return acc;
-        }, {}));
-      } catch (error) {
-        console.error('Error fetching modules:', error);
-      }
+    const token = localStorage.getItem('token');
+
+    const fetchData = async () => {
+        if (token) {
+            try {
+                // Fetch modules for Intern
+                const modulesResponse = await axios.get('http://localhost:5000/getAllModules', {
+                    headers: {
+                        Authorization: token
+                    }
+                });
+                const filteredModules = modulesResponse.data.modules.filter(module => module.UserType === 'Intern');
+                setModules(filteredModules.map(module => ({ ...module })));
+                setLoadingModules(false);
+                setShowDetails(filteredModules.reduce((acc, module) => {
+                    acc[module._id] = false;
+                    return acc;
+                }, {}));
+
+                // Fetch all works data
+                const worksResponse = await axios.get('http://localhost:5000/getAllWorks', {
+                    headers: {
+                        Authorization: token
+                    }
+                });
+                setWorks(worksResponse.data.works.map(work => ({ ...work })));
+                setLoadingWorks(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
     };
 
-    const fetchWorks = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/getAllWorks');
-        setWorks(response.data.works.map(work => ({ ...work })));
-        setLoadingWorks(false);
-      } catch (error) {
-        console.error('Error fetching works:', error);
-      }
-    };
+    fetchData();
+}, []);
 
-    fetchModules();
-    fetchWorks();
-  }, []);
 
   if (loadingModules || loadingWorks) {
     return <div>Loading...</div>;
@@ -76,42 +86,49 @@ const EmployeeTraining = () => {
 
   return (
     <div className='TotalPage'>
-      <h2>Module List</h2>
-      <ul className="TotalPage-list">
-        {modules.map((module) => (
-          <li key={module._id} className="TotalPage-module">
-            <div className="TotalPage-module-header">
-              <h3>{module.TrainingName}</h3>
-              <button onClick={() => toggleDetails(module._id)}>
-                {showDetails[module._id] ? 'Hide Module' : 'Show Module'}
-              </button>
-            </div>
-            {showDetails[module._id] && (
-              <div className="TotalPage-module-details">
-                <p><strong>COE Name:</strong> {module.Coe_Name}</p>
-                <p><strong>User Type:</strong> {module.UserType}</p>
-                <p><strong>Date:</strong> {formatDate(module.Date)}</p>
-                {getUniqueWorkSessionDates().map((date) => (
-                  <div key={date}>
-                    {filteredAndSortedWorkSessions.find(mod => mod._id === module._id).WorkSessions.some(work => work.date === date) && (
-                      <>
-                        <h4 className="TotalPage-work-session-date">Work Sessions Date: {formatDate(date)}</h4>
-                        <ul className='TotalPage-SessionCard'>
-                          {filteredAndSortedWorkSessions.find(mod => mod._id === module._id).WorkSessions.filter(work => work.date === date).map((work) => (
-                            <li key={work._id}>
-                              <WorkSessionCard className={`TotalPage-WorkSessionCard ${work.WorkType}`} work={work} />
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
+      {userType === 'Intern' ? (
+        <>
+          <h2>Module List</h2>
+          <ul className="TotalPage-list">
+            {modules.map((module) => (
+              <li key={module._id} className="TotalPage-module">
+                <div className="TotalPage-module-header">
+                  <h3>{module.TrainingName}</h3>
+                  <button onClick={() => toggleDetails(module._id)}>
+                    {showDetails[module._id] ? 'Hide Module' : 'Show Module'}
+                  </button>
+                </div>
+                {showDetails[module._id] && (
+                  <div className="TotalPage-module-details">
+                    <p><strong>COE Name:</strong> {module.Coe_Name}</p>
+                    <p><strong>User Type:</strong> {module.UserType}</p>
+                    <p><strong>Date:</strong> {formatDate(module.Date)}</p>
+                    {getUniqueWorkSessionDates().map((date) => (
+                      <div key={date}>
+                        {filteredAndSortedWorkSessions.find(mod => mod._id === module._id).WorkSessions.some(work => work.date === date) && (
+                          <>
+                            <h4 className="TotalPage-work-session-date">Work Sessions Date: {formatDate(date)}</h4>
+                            <ul className='TotalPage-SessionCard'>
+                              {filteredAndSortedWorkSessions.find(mod => mod._id === module._id).WorkSessions.filter(work => work.date === date).map((work) => (
+                                <li key={work._id}>
+                                  <WorkSessionCard className={`TotalPage-WorkSessionCard ${work.WorkType}`} work={work} />
+                                  {/* Your WorkSessionCard component */}
+                                </li>
+                              ))}
+                            </ul>
+                          </>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>Unauthorized to Access this Page</p>
+      )}
     </div>
   );
 };

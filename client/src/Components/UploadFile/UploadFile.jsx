@@ -6,6 +6,8 @@ import axios from 'axios';
 const CSVParser = () => {
     const [jsonData, setJsonData] = useState([]);
     const [isParsing, setIsParsing] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const userType = localStorage.getItem('userType');
 
     const handleFileUpload = (event) => {
         const file = event.files[0];
@@ -43,25 +45,45 @@ const CSVParser = () => {
             }
         });
     };
-    
 
+    const handleDeleteAllPerformances = () => {
+        setIsDeleting(true);
+        axios.delete('http://localhost:5000/deleteAllPerformance')
+            .then(response => {
+                console.log('All performances deleted:', response.data);
+                setJsonData([]);
+                setIsDeleting(false);
+            })
+            .catch(error => {
+                console.error('Error deleting performances:', error);
+                setIsDeleting(false);
+            });
+    };
+    
     return (
-        <div className="p-d-flex p-flex-column p-ai-center">
-            <h2 style={{ marginBottom: '20px' }}>CSV Parser</h2>
-            <FileUpload name="demo[]" accept=".csv" customUpload uploadHandler={handleFileUpload} />
-            {isParsing && <p>Parsing...</p>}
-            <ul className="p-mt-2">
-                {jsonData.map((data, index) => (
-                    <li key={index}>
-                        Email: {data.email}<br />
-                        ass_id: {data.Ass_id}
-                        module_id: {data.module_id}
-                        marks_obtained:{data.Marks_Obtained}
-                        Total_marks:{data.Total_Marks}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <>
+            {userType === 'Admin' && (
+                <div className="p-d-flex p-flex-column p-ai-center">
+                    <h2 style={{ marginBottom: '20px' }}>CSV Parser</h2>
+                    <FileUpload name="demo[]" accept=".csv" customUpload uploadHandler={handleFileUpload} />
+                    {isParsing && <p>Parsing...</p>}
+                    <button onClick={handleDeleteAllPerformances} disabled={isDeleting}>Delete All Performances</button>
+                    {isDeleting && <p>Deleting...</p>}
+                    <ul className="p-mt-2">
+                        {jsonData.map((data, index) => (
+                            <li key={index}>
+                                Email: {data.email}<br />
+                                ass_id: {data.Ass_id}
+                                module_id: {data.module_id}
+                                marks_obtained:{data.Marks_Obtained}
+                                Total_marks:{data.Total_Marks}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            {userType !== 'Admin' && <p>You are not authorized to access this feature.</p>}
+        </>
     );
 };
 

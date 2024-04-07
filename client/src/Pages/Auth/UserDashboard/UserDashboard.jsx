@@ -5,7 +5,8 @@ import UserNavbar from '../../../Components/UserNavbar/UserNavbar';
 import InternVisual from '../InternVisual/InternVisual';
 import EmployeeVisual from '../EmployeeVisual/EmployeeVisual';
 import UserPerformance from '../UserPerformance/UserPerformance';
-import WelcomePage from '../WelcomeAdmin/WelcomeAdmin'
+import WelcomePage from '../WelcomeAdmin/WelcomeAdmin' ;
+import UpdatePassword from '../../../Pages/Auth/ChangePassword/ChangePassword';
 export const UserContext = createContext();
 
 const UserDashboard = () => {
@@ -14,24 +15,35 @@ const UserDashboard = () => {
   const [isEmployeeVisual, setIsEmployeeVisual] = useState(false);
   const [userPerf, setUserPerf] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(true);
+  const [isUpdatePassword,setisUpdatePassword] = useState(false) ;
+
   useEffect(() => {
-    const userId = localStorage.getItem('id');
-    if (userId) {
-      axios.get(`http://localhost:5000/getUser/${userId}`)
-        .then(response => {
-          setUserData(response.data.user);
-        })
-        .catch(error => {
-          console.error('Error fetching user data:', error);
+    const token = localStorage.getItem('token');
+
+    const fetchUserData = async(token) =>{
+      try{
+        const response = await axios.get(`http://localhost:5000/getUser/${token}`,{
+            headers: {
+              Authorization: `${token}`
+            }
         });
+        console.log(response.data) ;
+        setUserData(response.data) ;
+        console.log("then---->",response.data) ;
+      } catch(error){
+        console.error('Error fetching user data:',error) ;
+      }
     }
-  }, []);
+      fetchUserData(token) ;
+  },[]);
+
 
   useEffect(() => {
     const internVisualStatus = localStorage.getItem('isInternVisual');
     const employeeVisualStatus = localStorage.getItem('isEmployeeVisual');
     const userPerfStatus = localStorage.getItem('isUserPerformance');
     const visited = localStorage.getItem('visited');
+    const updatePassword = localStorage.getItem('updatePassword') ;
 
     if (visited) {
       setIsFirstVisit(true);
@@ -46,7 +58,8 @@ const UserDashboard = () => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userData, isInternVisual, setIsInternVisual, isEmployeeVisual, setIsEmployeeVisual, userPerf, setUserPerf, isFirstVisit,setIsFirstVisit }}>
+    <UserContext.Provider value={{ userData, isInternVisual, setIsInternVisual, isEmployeeVisual, setIsEmployeeVisual, userPerf, setUserPerf, isFirstVisit,setIsFirstVisit,isUpdatePassword,setisUpdatePassword }}>
+      {userData?
       <div>
         <UserNavbar />
         { console.log(isFirstVisit) }
@@ -56,11 +69,13 @@ const UserDashboard = () => {
           isFirstVisit? <WelcomePage />:
           isInternVisual ? <InternVisual /> :
           isEmployeeVisual ? <EmployeeVisual /> :
-          userPerf ? <UserPerformance /> : null
+          userPerf ? <UserPerformance /> :
+          isUpdatePassword ? <UpdatePassword /> : null
         ) : (
           <h1>Loading User Data...</h1>
         )}
       </div>
+      : <h1>Unauthorized User Access</h1> }
     </UserContext.Provider>
   );
 };

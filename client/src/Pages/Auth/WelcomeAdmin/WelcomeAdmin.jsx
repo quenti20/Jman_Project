@@ -2,57 +2,53 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const WelcomePage = () => {
-  const [user, setUser] = useState(null);
-  const userId = localStorage.getItem('id');
+  const [userData, setUserData] = useState(null);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getUser/${userId}`);
-        if (response.status === 200) {
-          const userData = response.data.user;
-          console.log(userData);
-          setUser(userData);
-        } else {
-          console.error('Failed to fetch user data');
-        }
+        const response = await axios.get(`http://localhost:5000/getUser/${token}`, {
+          headers: {
+            Authorization: `${token}` // Ensure you include 'Bearer' before the token
+          }
+        });
+        console.log(response.data);
+        setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
 
-    if (userId) {
-      fetchUser();
+    if (token) {
+      fetchUserData();
     }
-  }, [userId]);
+  }, [token]);
 
   let welcomeMessage = '';
-  if (user) {
-    console.log(user);
-    switch (user.userType) {
-      
+  if (userData) {
+    switch (userData.userType) {
       case 'Admin':
-        welcomeMessage = `Welcome Admin ${user.name}`;
+        welcomeMessage = `Welcome Admin ${userData.name}`;
         break;
       case 'Intern':
-        welcomeMessage = `Welcome Intern ${user.name}`;
-        console.log("I am Intern")
+        welcomeMessage = `Welcome Intern ${userData.name}`;
         break;
       case 'Employee':
-        welcomeMessage = `Welcome Employee ${user.name}`;
+        welcomeMessage = `Welcome Employee ${userData.name}`;
         break;
       default:
-        welcomeMessage = `Welcome ${user.name}`;
+        welcomeMessage = `Welcome ${userData.name}`;
         break;
     }
   }
 
   return (
     <div>
-      {user ? (
+      {userData ? (
         <div>
           <p>{welcomeMessage}</p>
-          <p>Email: {user.email}</p>
+          <p>Email: {userData.email}</p>
         </div>
       ) : (
         <p>Loading...</p>

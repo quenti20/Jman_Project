@@ -28,42 +28,61 @@ const EmployeeTraining = () => {
   const [showUpdateModule, setShowUpdateModule] = useState(false);
   const [selectedModule, setSelectedModule] = useState(null);
 
+  const userType = localStorage.getItem('userType') ;
+
   useEffect(() => {
+    const token = localStorage.getItem('token');
+
     const fetchModules = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/getAllModules');
-        const filteredModules = response.data.modules.filter(module => module.UserType === 'Intern');
-        setModules(filteredModules.map(module => ({
-          ...module,
-        })));
-        setLoadingModules(false);
-        setShowDetails(filteredModules.reduce((acc, module) => {
-          acc[module._id] = false;
-          return acc;
-        }, {}));
-      } catch (error) {
-        console.error('Error fetching modules:', error);
-      }
+        try {
+            if (token) {
+                const response = await axios.get('http://localhost:5000/getAllModules', {
+                    headers: {
+                        Authorization: token
+                    }
+                });
+                const filteredModules = response.data.modules.filter(module => module.UserType === 'Intern');
+                setModules(filteredModules.map(module => ({ ...module })));
+                setLoadingModules(false);
+                setShowDetails(filteredModules.reduce((acc, module) => {
+                    acc[module._id] = false;
+                    return acc;
+                }, {}));
+            } else {
+                console.error('No token found.');
+            }
+        } catch (error) {
+            console.error('Error fetching modules:', error);
+        }
     };
 
     fetchModules();
-  }, []);
+}, []);
 
-  useEffect(() => {
+useEffect(() => {
+    const token = localStorage.getItem('token');
+
     const fetchWorks = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/getAllWorks');
-        setWorks(response.data.works.map(work => ({
-          ...work,
-        })));
-        setLoadingWorks(false);
-      } catch (error) {
-        console.error('Error fetching works:', error);
-      }
+        try {
+            if (token) {
+                const response = await axios.get('http://localhost:5000/getAllWorks', {
+                    headers: {
+                        Authorization: token
+                    }
+                });
+                setWorks(response.data.works.map(work => ({ ...work })));
+                setLoadingWorks(false);
+            } else {
+                console.error('No token found.');
+            }
+        } catch (error) {
+            console.error('Error fetching works:', error);
+        }
     };
 
     fetchWorks();
-  }, []);
+}, []);
+
 
   if (loadingModules || loadingWorks) {
     return <div>Loading...</div>;
@@ -161,6 +180,8 @@ const EmployeeTraining = () => {
 
   return (
     <div className='Fullpage'>
+  {userType === 'Admin' ? (
+    <>
       <h2>Module List</h2>
       <button onClick={() => setShowAddModule(true)}>Add Module</button>
       <ul className="module-list">
@@ -222,8 +243,12 @@ const EmployeeTraining = () => {
           onUpdate={handleUpdateModule}
         />
       )}
-    </div>
-  );
+    </>
+  ) : (
+    <p>You are Not Admin</p>
+  )}
+</div>
+)
 };
 
 export default EmployeeTraining;

@@ -11,7 +11,7 @@ const verifytoken = require('../middleware/verify')
 
 router.post('/newUser', userController.createNewUser) 
 router.post('/login', userController.userLogin)
-router.put('/changePassword/:id', userController.changePassword)
+router.put('/changePassword/:id',verifytoken, userController.changePassword)
 router.get('/getUser/:id',verifytoken, userController.getUserData) ; 
 
 
@@ -19,8 +19,8 @@ router.post('/createWork', CombinedController.createWork);
 router.post('/createModule', moduleController.createModule);
 router.post('/createTrainer', TrainerController.createTrainer);
 
-router.get('/getAllWorks', CombinedController.getWorks);
-router.get('/getAllModules', moduleController.getModules); 
+router.get('/getAllWorks',verifytoken, CombinedController.getWorks);
+router.get('/getAllModules',verifytoken, moduleController.getModules); 
 
 
 
@@ -33,7 +33,7 @@ router.delete('/deleteWork/:id', CombinedController.deleteWork);
 router.delete('/deleteModule/:id', moduleController.deleteModule);
 
 router.post('/AllPerformance', PerformanceController.postPerformance);
-router.get('/getAllPerformance', PerformanceController.getAllPerformance);
+router.get('/getAllPerformance',verifytoken, PerformanceController.getAllPerformance);
 router.delete('/deleteAllPerformance', PerformanceController.deleteAllPerformance);
 
 

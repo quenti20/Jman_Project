@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import WorkSessionCard from '../../../Components/WorkSessionCard/WorkSessionCard';
 import UpdateWork from '../../../Components/UpdateWork/UpdateWork';
@@ -29,44 +30,66 @@ const EmployeeTraining = () => {
   const [showAddModule, setShowAddModule] = useState(false);
   const [showUpdateModule, setShowUpdateModule] = useState(false);
   const [selectedModule, setSelectedModule] = useState(null);
+const [UserData, setUserData] = useState(null);
+const [isAdmin, setIsAdmin] = useState(false)
+  const navigate=useNavigate();
 
-  useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/getAllModules');
-        const filteredModules = response.data.modules.filter(module => module.UserType === 'Employee');
-        setModules(filteredModules.map(module => ({
-          ...module,
-        })));
-        setLoadingModules(false);
-        setShowDetails(filteredModules.reduce((acc, module) => {
-          acc[module._id] = false;
-          return acc;
-        }, {}));
-      } catch (error) {
-        console.error('Error fetching modules:', error);
-      }
-    };
+    const userType = localStorage.getItem('userType');
 
-    fetchModules();
+
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+  
+      const fetchModules = async () => {
+          try {
+              if (token) {
+                  const response = await axios.get('http://localhost:5000/getAllModules', {
+                      headers: {
+                          Authorization: token
+                      }
+                  });
+                  const filteredModules = response.data.modules.filter(module => module.UserType === 'Employee');
+                  setModules(filteredModules.map(module => ({ ...module })));
+                  setLoadingModules(false);
+                  setShowDetails(filteredModules.reduce((acc, module) => {
+                      acc[module._id] = false;
+                      return acc;
+                  }, {}));
+              } else {
+                  console.error('No token found.');
+              }
+          } catch (error) {
+              console.error('Error fetching modules:', error);
+          }
+      };
+  
+      fetchModules();
   }, []);
-
+  
   useEffect(() => {
-    const fetchWorks = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/getAllWorks');
-        setWorks(response.data.works.map(work => ({
-          ...work,
-        })));
-        setLoadingWorks(false);
-      } catch (error) {
-        console.error('Error fetching works:', error);
-      }
-    };
-
-    fetchWorks();
+      const token = localStorage.getItem('token');
+  
+      const fetchWorks = async () => {
+          try {
+              if (token) {
+                  const response = await axios.get('http://localhost:5000/getAllWorks', {
+                      headers: {
+                          Authorization: token
+                      }
+                  });
+                  setWorks(response.data.works.map(work => ({ ...work })));
+                  setLoadingWorks(false);
+              } else {
+                  console.error('No token found.');
+              }
+          } catch (error) {
+              console.error('Error fetching works:', error);
+          }
+      };
+  
+      fetchWorks();
   }, []);
-
+  
   if (loadingModules || loadingWorks) {
     return <div>Loading...</div>;
   }
@@ -195,10 +218,13 @@ const EmployeeTraining = () => {
   };
 
   return (
+   
     <div className='Full'>
-      <h2>Module List</h2>
-      <button className='ButtonsFew' onClick={() => setShowAddModule(true)}>Add Module</button>
-      <ul className="module-list">
+       {userType === 'Admin' ? (
+      <>
+        <h2>Module List</h2>
+        <button className='ButtonsFew' onClick={() => setShowAddModule(true)}>Add Module</button>
+        <ul className="module-list">
         {modules.map((module) => (
           <li key={module._id} className="module">
             <div className="module-header">
@@ -259,7 +285,11 @@ const EmployeeTraining = () => {
           onUpdate={handleUpdateModule}
         />
       )}
-    </div>
+   </>
+    ) : (
+      <p>You are not an admin.</p>
+    )}
+  </div>
   );
 };
 

@@ -20,36 +20,43 @@ const UserPerformanceDetails = () => {
     const [allWorks, setAllWorks] = useState([]);
 
     useEffect(() => {
-        // Fetch user data from local storage or API
-        const userId = localStorage.getItem('id'); // Assuming you store the user id in local storage
-        if (userId) {
-            axios.get(`http://localhost:5000/getUser/${userId}`)
-                .then(response => {
-                    setUserData(response.data.user);
-                })
-                .catch(error => {
-                    console.error('Error fetching user data:', error);
-                });
-        }
-        
-        // Fetch all performance data
-        axios.get('http://localhost:5000/getAllPerformance')
-            .then(response => {
-                setUserPerformance(response.data.data);
-            })
-            .catch(error => {
-                console.error('Error fetching performance data:', error);
-            });
-
-        // Fetch all works data
-        axios.get('http://localhost:5000/getAllWorks')
-            .then(response => {
-                setAllWorks(response.data.works);
-            })
-            .catch(error => {
-                console.error('Error fetching works data:', error);
-            });
+        const token = localStorage.getItem('token');
+    
+        const fetchData = async () => {
+            if (token) {
+                try {
+                    // Fetch user data
+                    const userDataResponse = await axios.get(`http://localhost:5000/getUser/${token}`, {
+                        headers: {
+                            Authorization: token
+                        }
+                    });
+                    setUserData(userDataResponse.data);
+    
+                    // Fetch all performance data
+                    const performanceDataResponse = await axios.get('http://localhost:5000/getAllPerformance', {
+                        headers: {
+                            Authorization: token
+                        }
+                    });
+                    setUserPerformance(performanceDataResponse.data.data);
+    
+                    // Fetch all works data
+                    const worksDataResponse = await axios.get('http://localhost:5000/getAllWorks', {
+                        headers: {
+                            Authorization: token
+                        }
+                    });
+                    setAllWorks(worksDataResponse.data.works);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+        };
+    
+        fetchData();
     }, []);
+    
 
     const getAssessmentDetails = () => {
         if (!userData || !userPerformance.length || !allWorks.length) {
