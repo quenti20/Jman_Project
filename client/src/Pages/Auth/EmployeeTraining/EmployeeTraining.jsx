@@ -31,7 +31,8 @@ const EmployeeTraining = () => {
   const [showUpdateModule, setShowUpdateModule] = useState(false);
   const [selectedModule, setSelectedModule] = useState(null);
 const [UserData, setUserData] = useState(null);
-const [isAdmin, setIsAdmin] = useState(false)
+const [isAdmin, setIsAdmin] = useState(false);
+const [user,setuser] = useState('') ;
   const navigate=useNavigate();
 
     const userType = localStorage.getItem('userType');
@@ -51,6 +52,7 @@ const [isAdmin, setIsAdmin] = useState(false)
                   const filteredModules = response.data.modules.filter(module => module.UserType === 'Employee');
                   setModules(filteredModules.map(module => ({ ...module })));
                   setLoadingModules(false);
+                  setuser('Employee');
                   setShowDetails(filteredModules.reduce((acc, module) => {
                       acc[module._id] = false;
                       return acc;
@@ -275,7 +277,7 @@ const [isAdmin, setIsAdmin] = useState(false)
         <UpdateWork work={selectedWork} visible={showUpdateWork} onHide={() => setShowUpdateWork(false)} onUpdate={handleUpdateWork} />
       )}
       {showAddModule && (
-        <AddModule visibility={showAddModule} setShowAddModule={setShowAddModule} />
+        <AddModule visibility={showAddModule} setShowAddModule={setShowAddModule} setuser ={user} />
       )}
       {showUpdateModule && (
         <UpdateModule

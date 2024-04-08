@@ -129,7 +129,7 @@ h2 {
 .WorkSessionCard {
   border-radius: 10px;
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   background-color: #dadde5;
   transition: background-color 0.3s ease;
 }
@@ -181,6 +181,7 @@ h2 {
 .SessionCard{
   display: flex;
   flex-direction: row  ;
+  flex-wrap: wrap;
   justify-content: space-evenly;
 }
 @keyframes cardAnimation {

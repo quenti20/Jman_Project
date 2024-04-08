@@ -5,7 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import axios from 'axios';
 
-const AddModule = ({ visibility, setShowAddModule }) => {
+const AddModule = ({ visibility, setShowAddModule, setuser }) => {
     const [visible, setVisible] = useState(visibility);
     const [trainingName, setTrainingName] = useState('');
     const [coeName, setCoeName] = useState('');
@@ -26,10 +26,11 @@ const AddModule = ({ visibility, setShowAddModule }) => {
 
     const handleSave = async () => { 
         try {
+            console.log(setuser) ;
             const data = {
                 TrainingName: trainingName,
                 Coe_Name: coeName,
-                UserType: 'Employee', // Fixed value for UserType
+                UserType: setuser, // Fixed value for UserType
                 Date: date,
                 WorkSessions: [] // Initialize WorkSessions array as it's not needed in AddModule
             };
