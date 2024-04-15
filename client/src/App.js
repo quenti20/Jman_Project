@@ -12,7 +12,8 @@ import InternVisual from './Pages/Auth/InternVisual/InternVisual';
 import UploadFile from './Components/UploadFile/UploadFile';
 import ViewPerformance from './Pages/Auth/UserPerformance/UserPerformance';
 import UserDashBoard from './Pages/Auth/UserDashboard/UserDashboard';
-
+import PowerBi from './Components/PowerBi/PowerBI'
+import MLModel from './Components/MlModel/MlModel';
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/login' element={<Login />} /> 
+          <Route path='/mlmodel' element={<MLModel/>} /> 
+          <Route path='/powerbi' element={<PowerBi/>} /> 
           <Route path='/createUser' element={<NewUser />} />
           <Route path='/userDashboard' element={<UserDashBoard />} />
           <Route path='/changePassword' element={<ChangePassword />} />

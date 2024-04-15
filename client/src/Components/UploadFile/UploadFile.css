@@ -1,0 +1,35 @@
+.CSVParser-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .CSVParser-content {
+    text-align: center;
+  }
+  
+  .CSVParser-data-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .FileUpload-file-upload {
+    margin-top: 20px;
+  }
+  
+  .FileUpload-button {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .FileUpload-button:hover {
+    background-color: #0056b3;
+  }
+  

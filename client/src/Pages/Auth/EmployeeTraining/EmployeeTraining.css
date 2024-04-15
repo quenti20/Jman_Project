@@ -1,18 +1,25 @@
-/*Dark mode styling */
-  body {
-  background-image: url('../../../pics/bgpic2.jpg');
-  /* background-image: linear-gradient(rgb(35, 4, 37),rgb(252, 241, 241)); */
-  /* background-repeat: no-repea; */
-  background-size: cover; 
+/* Dark mode styling */
+body {
+  background: linear-gradient(rgb(19, 6, 6), rgb(38, 27, 65), black);
+  /* Set a solid background color */
+  background-repeat: repeat;
   font-family: Arial, sans-serif;
   margin: 0;
-  color: #ffffff; /* Set text color to white */
- } 
+  color: #ffffff;
+  /* Set text color to white */
+  font-size: 16px;
+  /* Default font size */
+}
 
-
-.FullPage{
+.FullPage {
+  /* max-width: calc(100% - 250px); */
   border-radius: 20px;
-  background: linear-gradient(black,grey);
+  background-color: #4c4c4c;
+  /* Set a solid background color */
+}
+
+.Full{
+  margin-left: 17%;
 }
 
 .ButtonsFew {
@@ -21,7 +28,7 @@
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -32,15 +39,18 @@
   background-color: #45a049;
 }
 
-
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: calc(100% - 250px);
+  /* Adjust the width to accommodate the side navbar */
+  margin-left: 250px;
+  /* Adjusted for smaller screens */
   padding: 20px;
 }
 
 h2 {
   color: #ffffff;
+  font-size: 24px;
+  /* Increase font size for headings */
 }
 
 .module-list {
@@ -52,55 +62,35 @@ h2 {
   margin-bottom: 20px;
   border-radius: 20px;
   padding: 20px;
-  background-image: linear-gradient(135deg, #ff6fd8, #2c215a, #17a2b8);
-  animation: gradientAnimation 5s ease infinite alternate; /* Apply animation */
+  background-color: #362a42;
+  /* Set a solid background color */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-
-
 .module:hover {
-  background: linear-gradient(135deg, #58133c 0%, #1d1285 100%);
-  animation: backgroundAnimation 0.5s ease;
-}
-
-@keyframes backgroundAnimation {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
+  background: linear-gradient(135deg, #070707 0%, #453d77 100%);
 }
 
 .module-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #362a42, #04045f); /* Violet to Blue gradient */
-  padding: 10px 20px; /* Adjust padding as needed */
-  border-radius: 10px; /* Add border radius for rounded corners */
+  background-color: #362a42;
+  /* Set a solid background color */
+  padding: 10px 20px;
+  /* Adjust padding as needed */
+  border-radius: 10px;
+  /* Add border radius for rounded corners */
 }
 
 .module-header h3 {
   margin: 0;
-  color: #ffffff; /* Set text color to white */
+  color: #ffffff;
+  /* Set text color to white */
 }
 
-
 .module-header button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
@@ -125,13 +115,22 @@ h2 {
   margin: 5px 0;
 }
 
-/* WorkSessionCard */
+.work-session-date {
+  color: white;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  /* Set border radius to make edges round */
+  background-color: #362a42;
+  /* Set a solid background color */
+  padding: 20px;
+}
+
 .WorkSessionCard {
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 40px;
   background-color: #dadde5;
-  transition: background-color 0.3s ease;
+  /* Set a solid background color */
 }
 
 .WorkSessionCard:hover {
@@ -146,15 +145,6 @@ h2 {
   margin: 5px 0;
 }
 
-.work-session-date {
-  color: white;
-  margin-bottom: 20px;
-  border-radius: 10px; /* Set border radius to make edges round */
-  background: linear-gradient(135deg, violet, blue);
-    padding: 20px;
-}
-
-/* Update and Delete Buttons */
 .WorkSessionCard button {
   background-color: #007bff;
   color: #ffffff;
@@ -174,16 +164,13 @@ h2 {
   outline: none;
 }
 
-/* Add animation to WorkSessionCard */
-.WorkSessionCard {
-  animation: cardAnimation 0.2s ease;
-}
-.SessionCard{
+.SessionCard {
   display: flex;
-  flex-direction: row  ;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+
 @keyframes cardAnimation {
   0% {
     transform: translateY(-10px);
@@ -192,5 +179,54 @@ h2 {
   100% {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/* Responsive Styles */
+
+/* Small devices (phones) */
+@media only screen and (max-width: 1200px) {
+  .container {
+    padding: 10px;
+    max-width: calc(100% - 250px);
+    /* Adjust the width to accommodate the side navbar */
+    margin-left: 250px;
+    /* Adjusted for smaller screens */
+  }
+
+  h2 {
+    font-size: 20px;
+    /* Decrease font size for headings */
+  }
+
+  .module {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .module-header {
+    padding: 5px 15px;
+  }
+
+  .module-header button {
+    padding: 8px 15px;
+  }
+
+  .work-session-date {
+    padding: 15px;
+  }
+
+  .WorkSessionCard {
+    padding: 15px;
+    margin-bottom: 30px;
+  }
+
+  .WorkSessionCard button {
+    padding: 6px 12px;
+  }
+
+  /* Responsive buttons inside .module */
+  .module button {
+    padding: 8px 12px;
   }
 }

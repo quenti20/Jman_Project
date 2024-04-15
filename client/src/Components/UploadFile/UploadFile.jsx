@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Papa from 'papaparse';
 import { FileUpload } from 'primereact/fileupload';
 import axios from 'axios';
+import './UploadFile.css'; // Import CSS for styling
 
 const CSVParser = () => {
     const [jsonData, setJsonData] = useState([]);
@@ -61,29 +62,29 @@ const CSVParser = () => {
     };
     
     return (
-        <>
+        <div className="CSVParser-container">
             {userType === 'Admin' && (
-                <div className="p-d-flex p-flex-column p-ai-center">
-                    <h2 style={{ marginBottom: '20px' }}>CSV Parser</h2>
-                    <FileUpload name="demo[]" accept=".csv" customUpload uploadHandler={handleFileUpload} />
+                <div className="CSVParser-content">
+                    <h2>CSV Parser</h2>
+                    <FileUpload name="demo[]" accept=".csv" customUpload uploadHandler={handleFileUpload} className="FileUpload-file-upload" />
                     {isParsing && <p>Parsing...</p>}
-                    <button onClick={handleDeleteAllPerformances} disabled={isDeleting}>Delete All Performances</button>
+                    <button onClick={handleDeleteAllPerformances} disabled={isDeleting} className="FileUpload-button">Delete All Performances</button>
                     {isDeleting && <p>Deleting...</p>}
-                    <ul className="p-mt-2">
+                    <ul className="CSVParser-data-list">
                         {jsonData.map((data, index) => (
                             <li key={index}>
-                                Email: {data.email}<br />
-                                ass_id: {data.Ass_id}
-                                module_id: {data.module_id}
-                                marks_obtained:{data.Marks_Obtained}
-                                Total_marks:{data.Total_Marks}
+                                <span>Email: {data.email}</span><br />
+                                <span>ass_id: {data.Ass_id}</span><br />
+                                <span>module_id: {data.module_id}</span><br />
+                                <span>marks_obtained: {data.Marks_Obtained}</span><br />
+                                <span>Total_marks: {data.Total_Marks}</span>
                             </li>
                         ))}
                     </ul>
                 </div>
             )}
             {userType !== 'Admin' && <p>You are not authorized to access this feature.</p>}
-        </>
+        </div>
     );
 };
 

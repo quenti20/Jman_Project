@@ -1,86 +1,130 @@
 /* UserNavbar container */
 .User_Navbar-container {
-    background: linear-gradient(135deg, #333, #2e2b2b); /* Dark gradient background */
-    border-bottom: 2px solid #444; /* Dark border */
-    padding: 10px 20px 30px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  }
-  
-  /* Menu items */
+  background: linear-gradient(135deg, #333, #2e2b2b); /* Dark gradient background */
+  border-bottom: 2px solid #444; /* Dark border */
+  padding: 10px 20px 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Menu toggle button */
+.User_Navbar-menu-toggle {
+  cursor: pointer;
+  display: none; /* Hide by default */
+}
+
+.User_Navbar-menu-icon {
+  width: 30px; /* Width of each line */
+  height: 3px; /* Height of each line */
+  background-color: #fff; /* White color */
+  border-radius: 3px; /* Rounded corners */
+  margin-bottom: 5px; /* Spacing between lines */
+}
+
+/* Menu items */
+.User_Navbar-items {
+  display: flex;
+}
+
+.User_Navbar-menu-items {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.User_Navbar-menu-item {
+  margin-right: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.User_Navbar-menu-item:last-child {
+  margin-right: 0;
+}
+
+.User_Navbar-menu-item-label {
+  color: #c5bebe; /* White text color */
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold; /* Bold font weight */
+  margin: 20px 20px 20px 20px;
+}
+
+.User_Navbar-menu-item:hover {
+  color: #fff; /* Change text color on hover */
+}
+
+/* Profile container */
+.User_Navbar-profile-container {
+  position: relative;
+}
+
+/* Profile icon */
+.User_Navbar-profile-icon {
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  border-radius: 50%; /* Circular shape */
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth transition for icon scale */
+}
+
+.User_Navbar-profile-icon:hover {
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+/* Dropdown content */
+.User_Navbar-dropdown-content {
+  position: absolute;
+  top: 50px; /* Adjust distance from profile icon */
+  right: 0;
+  background-color: #444; /* Darker background color */
+  border: 1px solid #666; /* Dark border */
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.User_Navbar-dropdown-content button {
+  color: #fff; /* White text color */
+  background-color: #007bff; /* Blue button color */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-top: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.User_Navbar-dropdown-content button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Responsive styles */
+
+/* Media query for small devices (phones) */
+@media only screen and (max-width: 600px) {
   .User_Navbar-menu-items {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+    display: none; /* Hide menu items by default for small devices */
   }
-  
+
+  .User_Navbar-items.open {
+    display: flex; /* Show menu items when menu is open */
+    flex-direction: column; /* Stack items vertically */
+  }
+
   .User_Navbar-menu-item {
-    margin-right: 20px;
-    cursor: pointer;
-    transition: color 0.3s ease; /* Smooth transition for color change */
+    margin-right: 0; /* Reset margin for menu items */
+    margin-bottom: 20px; /* Adjusted margin */
   }
-  
+
   .User_Navbar-menu-item:last-child {
-    margin-right: 0;
+    margin-bottom: 0; /* Remove margin for last item */
   }
-  
+
   .User_Navbar-menu-item-label {
-    color: #c5bebe; /* White text color */
-    font-size: 16px; /* Adjust font size */
-    font-weight: bold; /* Bold font weight */
-    margin: 20px 20px 20px 20px;
+    margin-left: 0; /* Reset margin for menu item label */
   }
-  
-  .User_Navbar-menu-item:hover {
-    color: #fff; /* Change text color on hover */
-  }
-  
-  /* Profile container */
-  .User_Navbar-profile-container {
-    position: relative;
-  }
-  
-  /* Profile icon */
-  .User_Navbar-profile-icon {
-    width: 40px; /* Adjust size as needed */
-    height: 40px; /* Adjust size as needed */
-    border-radius: 50%; /* Circular shape */
-    cursor: pointer;
-    transition: transform 0.3s ease; /* Smooth transition for icon scale */
-  }
-  
-  .User_Navbar-profile-icon:hover {
-    transform: scale(1.1); /* Scale up on hover */
-  }
-  
-  /* Dropdown content */
-  .User_Navbar-dropdown-content {
-    position: absolute;
-    top: 50px; /* Adjust distance from profile icon */
-    right: 0;
-    background-color: #444; /* Darker background color */
-    border: 1px solid #666; /* Dark border */
-    border-radius: 5px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .User_Navbar-dropdown-content button {
-    color: #fff; /* White text color */
-    background-color: #007bff; /* Blue button color */
-    border: none;
-    border-radius: 5px;
-    padding: 8px 12px;
-    margin-top: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .User_Navbar-dropdown-content button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
+}

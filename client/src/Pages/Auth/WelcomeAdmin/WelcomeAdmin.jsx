@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './WelcomeAdmin.css';
 
 const WelcomePage = () => {
   const [userData, setUserData] = useState(null);
@@ -44,14 +45,14 @@ const WelcomePage = () => {
   }
 
   return (
-    <div>
+    <div className="WelcomePage-container">
       {userData ? (
         <div>
-          <p>{welcomeMessage}</p>
-          <p>Email: {userData.email}</p>
+          <p className="WelcomePage-heading">{welcomeMessage}</p>
+          <p className="WelcomePage-content">Email: {userData.email}</p>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className="WelcomePage-loading">Loading...</p>
       )}
     </div>
   );

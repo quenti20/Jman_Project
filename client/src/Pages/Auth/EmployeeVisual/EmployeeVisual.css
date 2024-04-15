@@ -1,164 +1,149 @@
 /* Dark mode styling */
 .TotalPage {
-    border-radius: 20px;
-    background: linear-gradient(#230d29, #420f44);
-  }
-  
+  border-radius: 20px;
+  background: linear-gradient(#230d29, #420f44);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  color: #ffffff;
+}
+
+.TotalPage-list {
+  list-style: none;
+  padding: 0;
+}
+
+.TotalPage-module {
+  margin-bottom: 20px;
+  border-radius: 20px;
+  padding: 20px;
+  background-image: linear-gradient(135deg, #311041, #3a0a30, #350410);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.TotalPage-module:hover {
+  background: linear-gradient(135deg, #333333 0%, #0a0a0a 100%);
+}
+
+.TotalPage-module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #152441, #174d57);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.TotalPage-module-header h3 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.TotalPage-module-header button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.TotalPage-module-header button:hover {
+  background-color: #45a049;
+}
+
+.TotalPage-module-header button:focus {
+  outline: none;
+}
+
+.TotalPage-module-details {
+  margin-top: 10px;
+}
+
+.TotalPage-module-details p {
+  margin: 5px 0;
+}
+
+.TotalPage-work-session-date {
+  color: white;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2a2a2a, #09143b);
+  padding: 20px;
+}
+
+.TotalPage-SessionCard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.TotalPage-WorkSessionCard {
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #303030;
+  transition: background-color 0.3s ease;
+}
+
+.TotalPage-WorkSessionCard:hover {
+  background-color: #282828;
+}
+
+.TotalPage-WorkSessionCard h3 {
+  margin: 0;
+}
+
+.TotalPage-WorkSessionCard p {
+  margin: 5px 0;
+}
+
+.TotalPage-WorkSessionCard button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.TotalPage-WorkSessionCard button:hover {
+  background-color: #0056b3;
+}
+
+.TotalPage-WorkSessionCard button:focus {
+  outline: none;
+}
+
+/* Zoom effect for selected module */
+.TotalPage-module.selected {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
   }
-  
-  h2 {
-    color: #ffffff;
-  }
-  
-  .TotalPage-list {
-    list-style: none;
-    padding: 0;
-  }
-  
+}
+
+@media (max-width: 576px) {
   .TotalPage-module {
-    margin-bottom: 20px;
-    border-radius: 20px;
-    padding: 20px;
-    background-image: linear-gradient(135deg, #311041, #3a0a30, #350410);
-    animation: gradientAnimation 5s ease infinite alternate; /* Apply animation */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
   }
-  
-  .TotalPage-module:hover {
-    background: linear-gradient(135deg, #333333 0%, #0a0a0a 100%);
-    animation: backgroundAnimation 0.5s ease;
-  }
-  
-  .TotalPage-module-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(135deg, #152441, #174d57); /* Dark gradient */
-    padding: 10px 20px; /* Adjust padding as needed */
-    border-radius: 10px; /* Add border radius for rounded corners */
-  }
-  
-  .TotalPage-module-header h3 {
-    margin: 0;
-    color: #ffffff; /* Set text color to white */
-  }
-  
-  .TotalPage-module-header button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .TotalPage-module-header button:hover {
-    background-color: #45a049;
-  }
-  
-  .TotalPage-module-header button:focus {
-    outline: none;
-  }
-  
-  .TotalPage-module-details {
-    margin-top: 10px;
-  }
-  
-  .TotalPage-module-details p {
-    margin: 5px 0;
-  }
-  
-  .TotalPage-work-session-date {
-    color: white;
-    margin-bottom: 20px;
-    border-radius: 10px; /* Set border radius to make edges round */
-    background: linear-gradient(135deg, #2a2a2a, #09143b);
-    padding: 20px;
-  }
-  
-  .TotalPage-SessionCard {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-  
-  .TotalPage-WorkSessionCard {
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: #303030;
-    transition: background-color 0.3s ease;
-  }
-  
-  .TotalPage-WorkSessionCard:hover {
-    background-color: #282828;
-  }
-  
-  .TotalPage-WorkSessionCard h3 {
-    margin: 0;
-  }
-  
-  .TotalPage-WorkSessionCard p {
-    margin: 5px 0;
-  }
-  
-  .TotalPage-WorkSessionCard button {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 15px;
-    margin-right: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .TotalPage-WorkSessionCard button:hover {
-    background-color: #0056b3;
-  }
-  
-  .TotalPage-WorkSessionCard button:focus {
-    outline: none;
-  }
-  
-  .TotalPage-WorkSessionCard {
-    animation: cardAnimation 0.2s ease;
-  }
-  
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    100% {
-      background-position: 100% 50%;
-    }
-  }
-  
-  @keyframes backgroundAnimation {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  
-  @keyframes cardAnimation {
-    0% {
-      transform: translateY(-10px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
+}
+

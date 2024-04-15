@@ -224,7 +224,7 @@ const [user,setuser] = useState('') ;
     <div className='Full'>
        {userType === 'Admin' ? (
       <>
-        <h2>Module List</h2>
+        <h2>Employee Modules</h2>
         <button className='ButtonsFew' onClick={() => setShowAddModule(true)}>Add Module</button>
         <ul className="module-list">
         {modules.map((module) => (

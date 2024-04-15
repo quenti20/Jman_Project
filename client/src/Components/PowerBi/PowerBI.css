@@ -1,0 +1,23 @@
+.dashboard-container {
+    text-align: center;
+    height: 100vh; /* Set the container height to 100% of viewport height */
+  }
+  
+  .dashboard-heading {
+    margin-bottom: 20px;
+  }
+  
+  .iframe-container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Set the container height to 100% of its parent */
+  }
+  
+  .dashboard-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  

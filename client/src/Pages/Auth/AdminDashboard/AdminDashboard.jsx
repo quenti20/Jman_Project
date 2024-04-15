@@ -6,6 +6,8 @@ import CreateUser from '../../../Pages/Auth/UserCreation/NewUser';
 import UploadFile from '../../../Components/UploadFile/UploadFile';
 import InternPlan from '../InternTraining/InternTraining';
 import UpdatePassword from '../../../Pages/Auth/ChangePassword/ChangePassword'
+import PowerBIDashboard from '../../../Components/PowerBi/PowerBI';
+import MLModel from '../../../Components/MlModel/MlModel';
 //import { NavContext } from './NavContext'; // Import NavContext
 
 export const NavContext = createContext();
@@ -17,6 +19,9 @@ const AdminDashboard = () => {
     localStorage.setItem('isEmployeePlan', false);
     localStorage.setItem('isInternPlan', false);
     localStorage.setItem('isUpdatePassword', false);
+    localStorage.setItem('isPowerBI',false) ;
+    localStorage.setItem('isMLModel',false) ;
+    
   }
 
   const [userData, setUserData] = useState(null); // State to store user data
@@ -25,6 +30,9 @@ const AdminDashboard = () => {
   const [isInternPlan, setIsInternPlan] = useState(false);
   const [isUpload, setIsUpload] = useState(false);
   const [isUpdatePassword,setisUpdatePassword] = useState(false) ;
+  const [isPowerBI, setIsPowerBI] = useState(false) ;
+  const [isMLModel, setIsMLModel] = useState(false) ;
+
   // const {userData, setUserData} = useState(null); 
 
   useEffect(() => {
@@ -49,7 +57,8 @@ const AdminDashboard = () => {
   
 
   return (
-    <NavContext.Provider value={{ isHome, setIsHome, isEmployeePlan, setIsEmployeePlan, isInternPlan, setIsInternPlan, isUpload, setIsUpload,isUpdatePassword,setisUpdatePassword }}>
+    <NavContext.Provider value={{ isHome, setIsHome, isEmployeePlan, setIsEmployeePlan, isInternPlan, setIsInternPlan, isUpload, setIsUpload,isUpdatePassword,setisUpdatePassword,
+      isPowerBI,setIsPowerBI,isMLModel,setIsMLModel }}>
       {userData ?
         <div>
           <NavBar />
@@ -58,7 +67,9 @@ const AdminDashboard = () => {
             <TrainingPage /> : localStorage.getItem('isInternPlan') === 'true' ? 
             <InternPlan /> : localStorage.getItem('isUpload') === 'true' ? 
             <UploadFile /> : localStorage.getItem('isUpdatePassword') === 'true' ? 
-            <UpdatePassword /> : <></>}
+            <UpdatePassword /> : localStorage.getItem('isPowerBI') === 'true' ? 
+            <PowerBIDashboard /> : localStorage.getItem('isMLModel') === 'true' ? 
+            <MLModel /> :  <></>}
         </div>
         : <h1>Loading User Data...</h1>} {/* Display a loading message while fetching user data */}
     </NavContext.Provider>
